@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4>Galerija</h4>
+    <button type="button" class="btn btn-default pull-right" ng-click="cancel()">X</button>
+</div>
+
+<div class="modal-body">
+    <div class="ninepixels_gallery-holder" ng-repeat="image in images" ng-click="delete(image)">
+        <img src="http://localhost:8000/uploads/{{image.url}}" alt="">
+        <span class="ninepixels_gallery-info">
+            Delete image
+        </span>
+    </div>
+    <div class="ninepixels_gallery-uploader" np-uploader></div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-ninepixels" ng-click="cancel()">Zatvori</button>
+</div>

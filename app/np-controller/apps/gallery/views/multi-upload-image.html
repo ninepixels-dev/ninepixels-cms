@@ -1,0 +1,38 @@
+<div class="multi-image-upload" nv-file-drop uploader="uploader">
+
+    <div class="choose-image" ng-hide="uploader.queue.length">
+        <div ng-show="!uploader.queue.length">
+            <i class="glyphicon glyphicon-picture"></i>
+            <span>Choose Image</span>
+        </div>
+
+        <input type="file" nv-file-select uploader="uploader" ng-click="uploader.clearQueue()" multiple />
+    </div>
+
+    <div ng-repeat="item in uploader.queue" ng-show="uploader.queue.length" class="multi-thumb" ng-click="item.remove()">
+        <div ng-show="uploader.isHTML5" np-uploader-thumb="{ file: item._file, width: 165 }"></div>
+        <span class="glyphicon glyphicon-ban-circle"></span>
+    </div>
+
+    <br>
+    Image width:
+    <select ng-model="resolution">
+        <option value="undefined">Original</option>
+        <option value="1280">1280x900</option>
+        <option value="800">800x600</option>
+    </select>
+
+    <div class="controls">
+        Progress:
+        <div class="queue-progress">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" ng-style="{
+                            'width': uploader.progress + '%'}"></div>
+            </div>
+            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+        </div>
+    </div>
+
+</div>

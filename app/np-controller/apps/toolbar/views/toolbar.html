@@ -1,0 +1,38 @@
+<div class="holding-container"></div>
+
+<div class="toolbar-container">
+    <div class="user-info pull-left">
+        <div class="user">{{user.username}}</div>
+    </div>
+
+    <div class="btn-group" ng-controller="npPageController as page">
+        <button class="btn btn-toolbar" ng-click="page.manage()">
+            <i class="toolbar-icon icon-control-page"></i>Stranice
+        </button>
+        <button class="btn btn-toolbar" ng-click="page.manageCurrentPage()">
+            <i class="toolbar-icon icon-edit-page"></i>Izmeni ovu stranicu
+        </button>
+    </div>
+
+    <div class="btn-group" ng-controller="npUsersController as user">
+        <button class="btn btn-toolbar" ng-click="user.manage()">
+            <i class="toolbar-icon icon-control-users"></i>Korisnici
+        </button>
+    </div>
+
+    <div class="dropdown-toolbar dropdown" ng-controller="npAssetController as assetCtrl">
+        <button class="btn btn-toolbar dropdown-toggle" type="button" data-toggle="dropdown">
+            <i class="toolbar-icon icon-content"></i>Sadržaj <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="#" ng-click="assetCtrl.viewGallery()">Galerija</a></li>
+            <li><a href="#" ng-click="assetCtrl.componentManager()">Komponente</a></li>
+        </ul>
+    </div>
+
+    <div class="btn-group pull-right">
+        <button class="btn btn-toolbar" ng-click="logout()">
+            <i class="toolbar-icon icon-log-out"></i>Odjavljivanje
+        </button>
+    </div>
+</div>
