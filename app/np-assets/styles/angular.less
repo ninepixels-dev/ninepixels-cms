@@ -494,6 +494,18 @@
             font-size: 11px;
         }
     }
+
+    .pick-image {
+        padding: 20px;
+        border: 2px dashed #e6e6e6;
+        text-align: center;
+        img {
+            width: 33%;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
 }
 
 .ninepixels_item_holder { display: none; }
@@ -528,6 +540,20 @@ body.editing {
     &:hover {
         img { opacity: .5; }
         .ninepixels_gallery-info { display: block; }
+    }
+}
+
+.ninepixels_remove-image {
+    background: transparent;
+    text-align: center;
+    font-size: 15px;
+    border: 1px solid lightgrey;
+    padding: 20px;
+    i {
+        display: block;
+        font-size: 40px;
+        color: grey;
+        margin-bottom: 10px;
     }
 }
 

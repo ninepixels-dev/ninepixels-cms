@@ -19,8 +19,8 @@ function npEditor() {
             elem.on('mouseover', function (e) {
                 floatingPanel.css({
                     position: 'absolute',
-                    left: e.clientX,
-                    top: e.clientY
+                    left: e.pageX,
+                    top: e.pageY
                 }).addClass('active');
             });
 

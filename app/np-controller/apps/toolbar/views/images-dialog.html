@@ -4,8 +4,8 @@
 </div>
 
 <div class="modal-body">
-    <div class="ninepixels_gallery-holder" ng-repeat="image in images" ng-click="delete(image)">
-        <img src="http://localhost:8000/uploads/{{image.url}}" alt="">
+    <div class="ninepixels_gallery-holder" ng-repeat="image in images" ng-if="images" ng-click="delete(image)">
+        <img ng-if="image" src="{{server_url + image.url}}">
         <span class="ninepixels_gallery-info">
             Delete image
         </span>

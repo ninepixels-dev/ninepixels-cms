@@ -110,6 +110,14 @@
             </div>
         </div>
         <div class="col-md-12">
+            <div class="form-group">
+                <label for="item-image">Image</label>
+                <div np-pick-image id="item-image" class="pick-image" ng-model="page.image" ng-click="openModal()">
+                    <img ng-if="page.image" src="{{server_url + page.image.url}}" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
             <div class="form-group" np-single-image-upload data-upload="uploadImage"></div>
         </div>
         <div class="col-md-4">

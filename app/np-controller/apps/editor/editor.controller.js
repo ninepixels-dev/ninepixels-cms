@@ -2,13 +2,14 @@
 
 'use strict';
 
-npEditorCtrl.$inject = ['$scope', '$window', 'api', 'modalDialog', 'assets'];
-function npEditorCtrl($scope, $window, api, modalDialog, assets) {
+npEditorCtrl.$inject = ['$scope', '$window', 'api', 'modalDialog', 'assets', 'server_url'];
+function npEditorCtrl($scope, $window, api, modalDialog, assets, server_url) {
     var itemScope = $scope.$parent;
 
     this.modify = function (item) {
         $scope.edit = false;
         $scope.items = assets.getAsset('items');
+        $scope.server_url = server_url + 'uploads/';
 
         if (item) {
             $scope.edit = true;
@@ -24,9 +25,14 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets) {
         var modal = modalDialog.showModal(params);
 
         $scope.save = function (_item) {
+            if (_item.image) {
+                _item.image = _item.image.id;
+            } else {
+                delete _item.image;
+            }
+
             if ($scope.edit) {
                 _item.page = _item.page.id;
-
                 return api('items').update(_item).then(function (res) {
                     if (res.status === 200) {
                         $window.location.reload();

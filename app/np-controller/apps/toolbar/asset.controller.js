@@ -2,10 +2,11 @@
 
 'use strict';
 
-npAssetController.$inject = ['$scope', 'api', 'modalDialog', 'assets'];
-function npAssetController($scope, api, modalDialog, assets) {
+npAssetController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'server_url'];
+function npAssetController($scope, api, modalDialog, assets, server_url) {
     this.viewGallery = function () {
         $scope.images = assets.getAsset('images');
+        $scope.server_url = server_url + 'uploads/';
 
         var params = {
             scope: $scope,

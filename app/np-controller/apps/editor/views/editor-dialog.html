@@ -9,8 +9,15 @@
     </div>
 
     <div class="form-group">
-        <label for="item-classes">Dodatne klase / Tab</label>
+        <label for="item-classes">Dodatne klase</label>
         <input type="text" class="form-control" ng-model="item.classes" id="item-classes">
+    </div>
+
+    <div class="form-group">
+        <label for="item-image">Slika</label>
+        <div np-pick-image id="item-image" class="pick-image" ng-model="item.image" ng-click="openModal()">
+            <img ng-if="item.image" src="{{server_url + item.image.url}}" />
+        </div>
     </div>
 </div>
 

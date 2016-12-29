@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h4>Izaberite sliku</h4>
+    <button type="button" class="btn btn-default pull-right" ng-click="cancel()">X</button>
+</div>
+
+<div class="modal-body">
+    <div class="ninepixels_gallery-holder ninepixels_remove-image" ng-click="choose('')">
+        <i class="fa fa-ban"></i>Poništi izabrano
+    </div>
+    <div class="ninepixels_gallery-holder" ng-repeat="image in images" ng-if="images" ng-click="choose(image)">
+        <img src="{{server_url + image.url}}" alt="">
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-ninepixels" ng-click="cancel()">Zatvori</button>
+</div>

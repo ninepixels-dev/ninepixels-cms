@@ -2,12 +2,13 @@
 
 'use strict';
 
-npPageController.$inject = ['$scope', '$cookies', 'api', 'modalDialog', 'assets'];
-function npPageController($scope, $cookies, api, modalDialog, assets) {
+npPageController.$inject = ['$scope', '$cookies', 'api', 'modalDialog', 'assets', 'server_url'];
+function npPageController($scope, $cookies, api, modalDialog, assets, server_url) {
     var self = this;
 
     this.manage = function (currentPage) {
         $scope.pages = assets.getAsset('pages');
+        $scope.server_url = server_url + 'uploads/';
         $scope.edit = false;
         $scope.view = 'list';
 
@@ -73,6 +74,14 @@ function npPageController($scope, $cookies, api, modalDialog, assets) {
         $scope.save = function (_page) {
             if (_page.parent) {
                 _page.parent = _page.parent.id;
+            } else {
+                delete _page.image;
+            }
+
+            if (_page.image) {
+                _page.image = _page.image.id;
+            } else {
+                delete _page.image;
             }
 
             if (!$scope.edit) {

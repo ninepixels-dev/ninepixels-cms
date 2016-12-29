@@ -18,4 +18,5 @@ angular.module('ninepixels', [
     'ninepixels.ui.htmlEditor',
     'ninepixels.ui.typeahead',
     'ninepixels.ui.uploader'
-]);
+
+]).constant('server_url', 'http://localhost:8000/');
