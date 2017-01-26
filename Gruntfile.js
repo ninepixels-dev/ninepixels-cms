@@ -3,35 +3,35 @@ module.exports = function (grunt) {
 
     var vendor = {
         js: [
-            'bower_components/angular/angular.js',
-            'bower_components/angular-cookies/angular-cookies.min.js',
-            'bower_components/angular-aria/angular-aria.min.js',
-            'bower_components/angular-animate/angular-animate.min.js',
-            'bower_components/angular-material/angular-material.min.js',
-            'bower_components/angular-sanitize/angular-sanitize.min.js',
-            'bower_components/angular-translate/angular-translate.min.js',
-            'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-            'bower_components/angular-file-upload/dist/angular-file-upload.min.js',
-            'bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js',
-            'bower_components/angular-loading-bar/build/loading-bar.min.js',
-            'bower_components/underscore/underscore-min.js',
-            'bower_components/moment/min/moment.min.js',
-            'bower_components/fullcalendar/dist/fullcalendar.min.js',
-            'bower_components/fullcalendar/dist/locale/sr.js',
-            'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-            'bower_components/intl-tel-input/build/js/intlTelInput.min.js',
-            'bower_components/medium-editor/dist/js/medium-editor.min.js',
-            'bower_components/medium-editor-tables/dist/js/medium-editor-tables.min.js'
+            'node_modules/angular/angular.js',
+            'node_modules/angular-cookies/angular-cookies.min.js',
+            'node_modules/angular-aria/angular-aria.min.js',
+            'node_modules/angular-animate/angular-animate.min.js',
+            'node_modules/angular-material/angular-material.min.js',
+            'node_modules/angular-sanitize/angular-sanitize.min.js',
+            'node_modules/angular-translate/angular-translate.min.js',
+            'node_modules/angular-ui-bootstrap/ui-bootstrap.min.js',
+            'node_modules/angular-file-upload/dist/angular-file-upload.min.js',
+            'node_modules/angular-file-saver/dist/angular-file-saver.bundle.min.js',
+            'node_modules/angular-loading-bar/build/loading-bar.min.js',
+            'node_modules/underscore/underscore-min.js',
+            'node_modules/moment/min/moment.min.js',
+            'node_modules/fullcalendar/dist/fullcalendar.min.js',
+            'node_modules/fullcalendar/dist/locale/sr.js',
+            'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+            'node_modules/intl-tel-input/build/js/intlTelInput.min.js',
+            'node_modules/medium-editor/dist/js/medium-editor.min.js',
+            'node_modules/medium-editor-tables/dist/js/medium-editor-tables.min.js'
         ],
         css: [
-            'bower_components/angular-material/angular-material.min.css',
-            'bower_components/angular-loading-bar/build/loading-bar.min.css',
-            'bower_components/fullcalendar/dist/fullcalendar.min.css',
-            'bower_components/font-awesome/css/font-awesome.min.css',
-            'bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
-            'bower_components/medium-editor/dist/css/medium-editor.min.css',
-            'bower_components/medium-editor/dist/css/themes/flat.min.css',
-            'bower_components/medium-editor-tables/dist/css/medium-editor-tables.min.css'
+            'node_modules/angular-material/angular-material.min.css',
+            'node_modules/angular-loading-bar/build/loading-bar.min.css',
+            'node_modules/fullcalendar/dist/fullcalendar.min.css',
+            'node_modules/font-awesome/css/font-awesome.min.css',
+            'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+            'node_modules/medium-editor/dist/css/medium-editor.min.css',
+            'node_modules/medium-editor/dist/css/themes/flat.min.css',
+            'node_modules/medium-editor-tables/dist/css/medium-editor-tables.min.css'
         ],
         controller: [
             'app/np-controller/config.js',
@@ -43,6 +43,8 @@ module.exports = function (grunt) {
             'app/np-controller/apps/editor/editor.directive.js',
             'app/np-controller/apps/editor/editor.controller.js',
             'app/np-controller/apps/editor/pickimage.directive.js',
+            'app/np-controller/apps/blog/blog.controller.js',
+            'app/np-controller/apps/products/products.controller.js',
 
             'app/np-controller/core/auth/auth.js',
             'app/np-controller/core/api/api.js',
@@ -60,11 +62,18 @@ module.exports = function (grunt) {
 
     var app = {
         js: [
-            'bower_components/jquery/dist/jquery.min.js',
-            'bower_components/bootstrap/dist/js/bootstrap.min.js'
+            'node_modules/jquery/dist/jquery.js',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/owl.carousel/dist/owl.carousel.min.js',
+            'node_modules/fancybox/dist/js/jquery.fancybox.js',
+
+            'app/np-assets/scripts/google-map.js',
+            'app/np-assets/scripts/main.js'
         ],
         css: [
-            'bower_components/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/fancybox/dist/css/jquery.fancybox.css',
+            'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
             '.tmp/app.css'
         ]
     };
@@ -167,12 +176,14 @@ module.exports = function (grunt) {
 
         copy: {
             html: {
-                src: 'app/index.php',
-                dest: 'dist/index.php'
+                expand: true,
+                src: 'app/*.php',
+                dest: 'dist/',
+                flatten: true
             },
             fontAwesome: {
                 expand: true,
-                src: 'bower_components/font-awesome/fonts/*',
+                src: 'node_modules/font-awesome/fonts/*',
                 dest: 'dist/np-assets/fonts/',
                 flatten: true
             },
@@ -200,7 +211,7 @@ module.exports = function (grunt) {
                 tasks: ['clean:structure', 'build']
             },
             index: {
-                files: ['app/index.php'],
+                files: ['app/index.php', 'app/debug.php'],
                 tasks: ['copy:html']
             },
             less: {
@@ -260,7 +271,7 @@ module.exports = function (grunt) {
         'copy'
     ]);
 
-    grunt.registerTask('develop', [
+    grunt.registerTask('server', [
         'build',
         'php',
         'watch'
