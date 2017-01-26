@@ -5,12 +5,17 @@
 assetService.$inject = ['api'];
 function assetService(api) {
     var self = this;
+
     var assets = {
         pages: [],
         items: [],
         images: [],
         components: [],
-        users: []
+        users: [],
+        galleries: [],
+        blogs: [],
+        products: [],
+        locales: []
     };
 
     this.getAllAssets = function () {
@@ -37,25 +42,21 @@ function assetService(api) {
         return assets[_asset];
     };
 
-    api('pages').fetch().then(function (pages) {
-        assets['pages'] = pages;
-    });
+    this.initAsset = function (_asset) {
+        api(_asset).fetch().then(function (asset) {
+            assets[_asset] = asset;
+        });
+    };
 
-    api('items').fetch().then(function (items) {
-        assets['items'] = items;
-    });
-
-    api('images').fetch().then(function (images) {
-        assets['images'] = images;
-    });
-
-    api('components').fetch().then(function (components) {
-        assets['components'] = components;
-    });
-
-    api('users').fetch().then(function (users) {
-        assets['users'] = users;
-    });
+    self.initAsset('pages');
+    self.initAsset('items');
+    self.initAsset('images');
+    self.initAsset('components');
+    self.initAsset('users');
+    self.initAsset('galleries');
+    self.initAsset('blogs');
+    self.initAsset('products');
+    self.initAsset('locales');
 }
 
 angular.module('ninepixels.assets', [])

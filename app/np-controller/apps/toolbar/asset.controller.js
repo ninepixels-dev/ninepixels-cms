@@ -2,11 +2,11 @@
 
 'use strict';
 
-npAssetController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'server_url'];
-function npAssetController($scope, api, modalDialog, assets, server_url) {
+npAssetController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npAssetController($scope, api, modalDialog, assets, config) {
     this.viewGallery = function () {
         $scope.images = assets.getAsset('images');
-        $scope.server_url = server_url + 'uploads/';
+        $scope.server_url = config.server_url + 'uploads/';
 
         var params = {
             scope: $scope,
@@ -23,6 +23,62 @@ function npAssetController($scope, api, modalDialog, assets, server_url) {
                     $scope.images = assets.removeAsset('images', image);
                 }
             });
+        };
+
+        $scope.cancel = function () {
+            modal.close();
+        };
+    };
+
+    this.localesManager = function () {
+        $scope.locales = assets.getAsset('locales');
+        $scope.view = 'list';
+        $scope.edit = false;
+
+        var params = {
+            scope: $scope,
+            templateUrl: '/np-controller/templates/locales-dialog.html'
+        };
+
+        var modal = modalDialog.showModal(params);
+
+        $scope._update = function (_locale) {
+            $scope._locale = _locale;
+            $scope.view = 'add';
+            $scope.edit = true;
+        };
+
+        $scope._delete = function (_locale) {
+            _locale.active = 0;
+            api('locales').update(_locale).then(function (res) {
+                if (res.status === 200) {
+                    $scope.locales = assets.removeAsset('locales', _locale);
+                }
+            });
+        };
+
+        $scope.add = function () {
+            $scope.view = 'add';
+            $scope.edit = false;
+        };
+
+        $scope.save = function (_locale) {
+            if (!$scope.edit) {
+                api('locales').add(_locale).then(callback);
+            } else {
+                api('locales').update(_locale).then(callback);
+            }
+
+            function callback(res) {
+                if (res.status === 201) {
+                    $scope.locales = assets.setAsset('locales', res.item);
+                } else if (res.status === 200) {
+                    $scope.locales = assets.updateAsset('locales', res.item);
+                }
+
+                $scope.view = 'list';
+                delete $scope._locale;
+            }
         };
 
         $scope.cancel = function () {

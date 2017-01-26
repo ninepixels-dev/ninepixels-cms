@@ -2,14 +2,15 @@
 
 'use strict';
 
-npEditorCtrl.$inject = ['$scope', '$window', 'api', 'modalDialog', 'assets', 'server_url'];
-function npEditorCtrl($scope, $window, api, modalDialog, assets, server_url) {
+npEditorCtrl.$inject = ['$scope', '$window', 'api', 'modalDialog', 'assets', 'config'];
+function npEditorCtrl($scope, $window, api, modalDialog, assets, config) {
     var itemScope = $scope.$parent;
 
     this.modify = function (item) {
         $scope.edit = false;
         $scope.items = assets.getAsset('items');
-        $scope.server_url = server_url + 'uploads/';
+        $scope.locales = assets.getAsset('locales');
+        $scope.server_url = config.server_url + 'uploads/';
 
         if (item) {
             $scope.edit = true;
@@ -35,7 +36,7 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets, server_url) {
                 _item.page = _item.page.id;
                 return api('items').update(_item).then(function (res) {
                     if (res.status === 200) {
-                        $window.location.reload();
+//                        $window.location.reload();
                     }
                 });
             }
@@ -47,7 +48,7 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets, server_url) {
 
             return api('items').add(_item).then(function (res) {
                 if (res.status === 201) {
-                    $window.location.reload();
+//                    $window.location.reload();
                 }
             });
         };
@@ -58,25 +59,33 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets, server_url) {
     };
 
     this.toggle = function (item) {
+        $scope.items = assets.getAsset('items');
         item = _.findWhere($scope.items, {id: item});
-        item['visible'] = item['visible'] === 1 ? 0 : 1;
+        item['visible'] = !!item['visible'];
         item = _.omit(item, 'page');
+
+        if (item.image) {
+            item.image = item.image.id;
+        } else {
+            delete item.image;
+        }
 
         api('items').update(item).then(function (res) {
             if (res.status === 200) {
-                $window.location.reload();
+//                $window.location.reload();
             }
         });
     };
 
     this.delete = function (item) {
+        $scope.items = assets.getAsset('items');
         item = _.findWhere($scope.items, {id: item});
         item.active = 0;
         item = _.omit(item, 'page');
 
         api('items').update(item).then(function (res) {
             if (res.status === 200) {
-                $window.location.reload();
+//                $window.location.reload();
             }
         });
     };

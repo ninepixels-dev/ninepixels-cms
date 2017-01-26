@@ -14,13 +14,13 @@
             {{page.navigation}}
             <div class="modal-list-actions">
                 <span ng-click="_toggle(page, 'show_header')">
-                    Header:<i class="fa" ng-class="page.show_header === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
+                    Zaglavlje (Header):<i class="fa" ng-class="page.show_header === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
                 </span>
                 <span ng-click="_toggle(page, 'show_footer')">
-                    Footer:<i class="fa" ng-class="page.show_footer === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
+                    Podnožje (Footer):<i class="fa" ng-class="page.show_footer === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
                 </span>
                 <span ng-click="_toggle(page, 'show_in_navigation')">
-                    In navigation:<i class="fa" ng-class="page.show_in_navigation === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
+                    Prikaži u navigaciji:<i class="fa" ng-class="page.show_in_navigation === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
                 </span>
             </div>
             <div class="modal-list-controls">
@@ -32,13 +32,13 @@
                     {{spage.navigation}}
                     <div class="modal-list-actions">
                         <span ng-click="_toggle(spage, 'show_header')">
-                            Header:<i class="fa" ng-class="spage.show_header === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
+                            Zaglavlje:<i class="fa" ng-class="spage.show_header === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
                         </span>
                         <span ng-click="_toggle(spage, 'show_footer')">
-                            Footer:<i class="fa" ng-class="spage.show_footer === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
+                            Podnožje:<i class="fa" ng-class="spage.show_footer === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
                         </span>
                         <span ng-click="_toggle(spage, 'show_in_navigation')">
-                            In navigation:<i class="fa" ng-class="spage.show_in_navigation === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
+                            U navigaciji:<i class="fa" ng-class="spage.show_in_navigation === 1 ? 'fa fa-check' : 'fa fa-ban'"></i>
                         </span>
                     </div>    
                     <div class="modal-list-controls">
@@ -55,7 +55,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label for="pageParent">Parent page</label>
+                <label for="pageParent">Povezana strana</label>
                 <div class="dropdown">
                     <button class="btn btn-default btn-block dropdown-toggle" type="button" data-toggle="dropdown">
                         {{page.parent.navigation|| 'Please select'}}
@@ -71,13 +71,13 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="pageName">Name</label>
+                <label for="pageName">Ime</label>
                 <input type="text" class="form-control" id="pageName" ng-change="validate(page.name)" ng-model="page.name" ng-trim="false">
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="pageTemplate">Template</label>
+                <label for="pageTemplate">Šablon</label>
                 <div class="dropdown">
                     <button class="btn btn-default btn-block dropdown-toggle" type="button" data-toggle="dropdown">
                         {{page.template|| 'Please select'}}
@@ -93,25 +93,25 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="pageTitle">Title</label>
+                <label for="pageTitle">Naslov (Title)</label>
                 <input type="text" class="form-control" id="pageTitle" ng-model="page.title">
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="pageNavName">Navigation name</label>
+                <label for="pageNavName">Ime navigacije</label>
                 <input type="text" class="form-control" id="pageNavName" ng-model="page.navigation">
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label for="pageDescription">Description</label>
+                <label for="pageDescription">Opis (Description)</label>
                 <textarea class="form-control" id="pageDescription" ng-model="page.description"></textarea>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label for="item-image">Image</label>
+                <label for="item-image">Slika</label>
                 <div np-pick-image id="item-image" class="pick-image" ng-model="page.image" ng-click="openModal()">
                     <img ng-if="page.image" src="{{server_url + page.image.url}}" />
                 </div>

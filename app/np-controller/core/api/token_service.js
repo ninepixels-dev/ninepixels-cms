@@ -1,14 +1,14 @@
 'use strict';
 
-tokenService.$inject = ['$cookies'];
-function tokenService($cookies) {
+tokenService.$inject = ['$cookies', 'config'];
+function tokenService($cookies, config) {
     var params = {
-        server_url: 'http://localhost:8000/',
+        server_url: config.server_url,
         auth_url: 'oauth/v2/token',
         type: 'Bearer',
         grant_type: 'password',
-        client_id: '1_1gj1aimxqi5ccgkgc40c4kcwg8skk4sw0c0sgsgk8ks408gckk',
-        client_secret: '5x2nmqqjdqg4wcw048kc8osc44sw8ggk8wc4ogswwwsws8ogs4'
+        client_id: config.client_id,
+        client_secret: config.client_secret
     };
 
     this.getAuthCred = function (data) {

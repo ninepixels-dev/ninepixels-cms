@@ -25,7 +25,10 @@
             <i class="toolbar-icon icon-content"></i>Sadržaj <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
+            <li><a href="#" ng-controller="npBlogCtrl as blog" ng-click="blog.manage()">Blog</a></li>
+            <li><a href="#" ng-controller="npProductsCtrl as product" ng-click="product.manage()">Proizvodi</a></li>
             <li><a href="#" ng-click="assetCtrl.viewGallery()">Galerija</a></li>
+            <li><a href="#" ng-click="assetCtrl.localesManager()">Lokalizacija</a></li>
             <li><a href="#" ng-click="assetCtrl.componentManager()">Komponente</a></li>
         </ul>
     </div>

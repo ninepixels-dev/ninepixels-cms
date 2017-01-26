@@ -12,6 +12,7 @@ function npToolbar($cookies, $window, assets) {
             scope.logout = function () {
                 $cookies.remove('token');
                 $cookies.remove('user');
+                $cookies.remove('page');
                 $window.location.reload();
             };
         }

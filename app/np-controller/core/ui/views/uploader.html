@@ -42,16 +42,33 @@
 </table>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" ng-model="additional.title">
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="form-group">
             <label for="alt">Alt</label>
             <input type="text" class="form-control" id="alt" ng-model="additional.alt">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="gallery">Galerija</label>
+            <div class="dropdown">
+                <button class="btn btn-default btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+                    {{additional.gallery.name|| 'Please select'}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="gallery in galleries track by gallery.id">
+                        <a ng-click="pickGallery(gallery)">{{gallery.name}}</a>
+                    </li>
+                    <li class="separate-line"><a class="btn-action" ng-click="addGallery()">Dodaj novu galeriju</a>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="col-md-12">

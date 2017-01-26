@@ -1,7 +1,7 @@
 'use strict';
 
-npPickImage.$inject = ['assets', 'modalDialog', 'server_url'];
-function npPickImage(assets, modalDialog, server_url) {
+npPickImage.$inject = ['assets', 'modalDialog', 'config'];
+function npPickImage(assets, modalDialog, config) {
     return {
         require: 'ngModel',
         link: function (scope, elem, attr, ngModel) {
@@ -15,7 +15,7 @@ function npPickImage(assets, modalDialog, server_url) {
                 };
 
                 modalScope.images = assets.getAsset('images');
-                modalScope.server_url = server_url + 'uploads/';
+                modalScope.server_url = config.server_url + 'uploads/';
 
                 var imageModal = modalDialog.showModal(params);
 

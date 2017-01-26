@@ -2,23 +2,27 @@
 
 'use strict';
 
-npPageController.$inject = ['$scope', '$cookies', 'api', 'modalDialog', 'assets', 'server_url'];
-function npPageController($scope, $cookies, api, modalDialog, assets, server_url) {
+npPageController.$inject = ['$scope', '$cookies', 'api', 'modalDialog', 'assets', 'config'];
+function npPageController($scope, $cookies, api, modalDialog, assets, config) {
     var self = this;
 
     this.manage = function (currentPage) {
         $scope.pages = assets.getAsset('pages');
-        $scope.server_url = server_url + 'uploads/';
+        $scope.server_url = config.server_url + 'uploads/';
         $scope.edit = false;
         $scope.view = 'list';
 
         $scope.templates = {
             "Homepage": "homepage.php",
-            "List View": "list-view.php",
-            "Rooms": "rooms.php",
-            "Single View": "single-view.php",
             "Content Page": "content.php",
-            "Gallery Page": "gallery-page.php",
+            "Rooms List": "rooms-list.php",
+            "Rooms Single": "rooms-single.php",
+            "List View": "list-view.php",
+            "Single View": "single-view.php",
+            "News View": "news-view.php",
+            "News List": "news-list.php",
+            "Gallery List": "gallery-list.php",
+            "Gallery Page": "gallery-single.php",
             "Contact": "contact.php"
         };
 
@@ -31,10 +35,10 @@ function npPageController($scope, $cookies, api, modalDialog, assets, server_url
         var modal = modalDialog.showModal(params);
 
         $scope.validate = function (value) {
-            $scope.page.name = value.replace(' ', '-').toLowerCase();
+            $scope.page.name = value.replace(/ /g, '-').toLowerCase();
 
             if ($scope.page.parent && $scope.page.name.indexOf($scope.page.parent.name + '/') === -1) {
-                $scope.page.name = $scope.page.parent.name + '/' + value.replace(' ', '-').toLowerCase();
+                $scope.page.name = $scope.page.parent.name + '/' + value.replace(/ /g, '-').toLowerCase();
             }
         };
 
@@ -97,7 +101,7 @@ function npPageController($scope, $cookies, api, modalDialog, assets, server_url
                     $scope.pages = assets.updateAsset('pages', res.item);
                 }
                 $scope.view = 'list';
-                delete $scope.page;
+                $scope.page = {};
             }
         };
 
@@ -106,7 +110,7 @@ function npPageController($scope, $cookies, api, modalDialog, assets, server_url
                 modal.close();
             } else {
                 $scope.view = 'list';
-                delete $scope.page;
+                $scope.page = {};
             }
         };
 
@@ -116,8 +120,8 @@ function npPageController($scope, $cookies, api, modalDialog, assets, server_url
     };
 
     this.manageCurrentPage = function () {
-        var currentPage = $cookies.getObject('page');
-        self.manage(currentPage);
+        var currentPage = $cookies.get('page').replace(/\+/g, ' ');
+        self.manage(JSON.parse(currentPage));
     };
 }
 

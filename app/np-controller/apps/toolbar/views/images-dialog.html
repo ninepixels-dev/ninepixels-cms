@@ -4,11 +4,10 @@
 </div>
 
 <div class="modal-body">
-    <div class="ninepixels_gallery-holder" ng-repeat="image in images" ng-if="images" ng-click="delete(image)">
-        <img ng-if="image" src="{{server_url + image.url}}">
-        <span class="ninepixels_gallery-info">
-            Delete image
-        </span>
+    <div class="ninepixels_gallery">
+        <div class="ninepixels_gallery-holder" ng-repeat="image in images" ng-if="images" ng-click="delete(image)">
+            <img src="{{server_url + image.url}}">
+        </div>
     </div>
     <div class="ninepixels_gallery-uploader" np-uploader></div>
 </div>
