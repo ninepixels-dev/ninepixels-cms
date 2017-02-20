@@ -1,9 +1,15 @@
 <?php
 
+// Enable GZIP
+ob_start("ob_gzhandler");
+
 // Set defaults
 $GLOBALS['SERVER_URL'] = 'http://localhost:8000/';
+$GLOBALS['CLIENT_URL'] = 'http://localhost:8100/';
 $GLOBALS['LOCALE'] = '';
-//$GLOBALS['SERVER_URL'] = 'http://api.hotelcitysavoy.com/';
+
+$GLOBALS['WITHOUT_TOOLBAR'] = isset($_GET['toolbar']);
+
 // If URL is np-admin, open administratin page
 if (parseURL() === 'np-admin') {
     return $GLOBALS['page'] = (object) array('id' => '0', 'name' => 'login-page', 'title' => 'Login Page', 'description' => 'Login Page');
@@ -42,7 +48,7 @@ foreach ($pages as $page) {
         $GLOBALS['page'] = $page;
         break;
     }
-    return pageNotFound();
+    pageNotFound();
 }
 
 function parseURL($separated = false) {
@@ -79,9 +85,10 @@ function npEditor($element, $class, $item, $withoutContent = false) {
     }
 }
 
-function npImage($item, $classes) {
+function npImage($item, $classes = '', $thumbs = false) {
     if (isset($item->image)) {
-        echo '<img class="' . $classes . '" src="' . $GLOBALS['SERVER_URL'] . 'uploads/' . $item->image->url . '" alt="' . $item->image->alt . '" title="' . $item->image->title . '">';
+        $thumbs = $thumbs ? 'uploads/' . $thumbs . '/' : 'uploads/';
+        echo '<img class="' . $classes . '" src="' . $GLOBALS['SERVER_URL'] . $thumbs . $item->image->url . '" alt="' . $item->image->alt . '" title="' . $item->image->title . '">';
     }
 }
 
@@ -93,6 +100,19 @@ function getContent($path) {
     } else {
         return [];
     }
+}
+
+function filterBy($items, $key, $value) {
+    $array = array_filter($items, function($obj) use ($key, $value) {
+        return $obj->{$key} === $value ? true : false;
+    });
+
+
+    if (empty($array) && isset($_COOKIE['user'])) {
+        return array((object) array("id" => 0, "identifier" => $value, "structure" => '', "classes" => "np-item-holder"));
+    }
+
+    return $array;
 }
 
 // Set reusable data

@@ -2,8 +2,8 @@
 
 'use strict';
 
-npUsersController.$inject = ['$scope', 'api', 'modalDialog', 'assets'];
-function npUsersController($scope, api, modalDialog, assets) {
+npUsersController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npUsersController($scope, api, modalDialog, assets, config) {
     this.manage = function () {
         $scope.users = assets.getAsset('users');
         $scope.edit = false;
@@ -12,7 +12,7 @@ function npUsersController($scope, api, modalDialog, assets) {
         var params = {
             scope: $scope,
             size: 'md',
-            templateUrl: '/np-controller/templates/users-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/users-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);

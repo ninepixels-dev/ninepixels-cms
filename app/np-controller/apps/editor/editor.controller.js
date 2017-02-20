@@ -2,8 +2,8 @@
 
 'use strict';
 
-npEditorCtrl.$inject = ['$scope', '$window', 'api', 'modalDialog', 'assets', 'config'];
-function npEditorCtrl($scope, $window, api, modalDialog, assets, config) {
+npEditorCtrl.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npEditorCtrl($scope, api, modalDialog, assets, config) {
     var itemScope = $scope.$parent;
 
     this.modify = function (item) {
@@ -20,7 +20,7 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets, config) {
         var params = {
             scope: $scope,
             size: 'lg',
-            templateUrl: '/np-controller/templates/editor-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/editor-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);
@@ -36,7 +36,8 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets, config) {
                 _item.page = _item.page.id;
                 return api('items').update(_item).then(function (res) {
                     if (res.status === 200) {
-//                        $window.location.reload();
+                        assets.updateAsset('items', res.item);
+                        document.location.reload();
                     }
                 });
             }
@@ -48,7 +49,8 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets, config) {
 
             return api('items').add(_item).then(function (res) {
                 if (res.status === 201) {
-//                    $window.location.reload();
+                    assets.setAsset('items', res.item);
+                    document.location.reload();
                 }
             });
         };
@@ -72,7 +74,8 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets, config) {
 
         api('items').update(item).then(function (res) {
             if (res.status === 200) {
-//                $window.location.reload();
+                assets.updateAsset('items', res.item);
+                document.location.reload();
             }
         });
     };
@@ -85,7 +88,8 @@ function npEditorCtrl($scope, $window, api, modalDialog, assets, config) {
 
         api('items').update(item).then(function (res) {
             if (res.status === 200) {
-//                $window.location.reload();
+                assets.removeAsset('items', res.item);
+                document.location.reload();
             }
         });
     };

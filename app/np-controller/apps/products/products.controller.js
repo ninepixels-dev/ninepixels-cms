@@ -17,7 +17,7 @@ function npProductsCtrl($scope, $window, api, modalDialog, assets, config) {
         var params = {
             scope: $scope,
             size: 'lg',
-            templateUrl: '/np-controller/templates/products-dialog.html'
+            templateUrl: 'np-controller/templates/products-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);

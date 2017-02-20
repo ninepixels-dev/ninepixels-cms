@@ -6,7 +6,7 @@ npBlogCtrl.$inject = ['$scope', '$window', 'api', 'modalDialog', 'assets', 'conf
 function npBlogCtrl($scope, $window, api, modalDialog, assets, config) {
     this.manage = function () {
         $scope.blogs = assets.getAsset('blogs');
-        $scope.server_url = config.server_url + 'uploads/';
+        $scope.server_url = config.server_url + 'uploads/thumbs/';
         $scope.edit = false;
         $scope.view = 'list';
 
@@ -17,7 +17,7 @@ function npBlogCtrl($scope, $window, api, modalDialog, assets, config) {
         var params = {
             scope: $scope,
             size: 'lg',
-            templateUrl: '/np-controller/templates/blog-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/blog-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);

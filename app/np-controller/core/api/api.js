@@ -1,3 +1,5 @@
+/* global templateCache */
+
 'use strict';
 
 apiService.$inject = ['$q', '$http', '$cookies', '$location', '$window', 'notify', 'token'];

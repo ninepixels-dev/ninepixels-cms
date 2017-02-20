@@ -8,7 +8,7 @@ function npPageController($scope, $cookies, api, modalDialog, assets, config) {
 
     this.manage = function (currentPage) {
         $scope.pages = assets.getAsset('pages');
-        $scope.server_url = config.server_url + 'uploads/';
+        $scope.server_url = config.server_url + 'uploads/thumbs/';
         $scope.edit = false;
         $scope.view = 'list';
 
@@ -29,7 +29,7 @@ function npPageController($scope, $cookies, api, modalDialog, assets, config) {
         var params = {
             scope: $scope,
             size: 'lg',
-            templateUrl: '/np-controller/templates/page-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/page-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);

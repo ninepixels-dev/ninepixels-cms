@@ -6,15 +6,31 @@ npAssetController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config']
 function npAssetController($scope, api, modalDialog, assets, config) {
     this.viewGallery = function () {
         $scope.images = assets.getAsset('images');
-        $scope.server_url = config.server_url + 'uploads/';
+        $scope.galleries = assets.getAsset('galleries');
+        $scope.server_url = config.server_url + 'uploads/thumbs/';
+        $scope.filteredGallery = [];
 
         var params = {
             scope: $scope,
             size: 'lg',
-            templateUrl: '/np-controller/templates/images-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/images-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);
+
+        _.each($scope.galleries, function (item) {
+            $scope.filteredGallery[item.id] = _.filter($scope.images, function (obj) {
+                return obj.gallery && obj.gallery.id === item.id;
+            });
+        });
+
+        $scope.pickGallery = function (gallery) {
+            if (!gallery) {
+                return delete $scope.galleryItems;
+            }
+
+            return $scope.galleryItems = $scope.filteredGallery[gallery.id];
+        };
 
         $scope.delete = function (image) {
             image.active = 0;
@@ -37,7 +53,7 @@ function npAssetController($scope, api, modalDialog, assets, config) {
 
         var params = {
             scope: $scope,
-            templateUrl: '/np-controller/templates/locales-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/locales-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);
@@ -94,7 +110,7 @@ function npAssetController($scope, api, modalDialog, assets, config) {
         var params = {
             scope: $scope,
             size: 'lg',
-            templateUrl: '/np-controller/templates/component-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/component-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);

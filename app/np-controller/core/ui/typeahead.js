@@ -1,7 +1,7 @@
 'use strict';
 
-typeaheadDirective.$inject = ['$timeout'];
-function typeaheadDirective($timeout) {
+typeaheadDirective.$inject = ['$timeout', 'config'];
+function typeaheadDirective($timeout, config) {
     return {
         scope: {
             selectedItem: '=model',
@@ -12,7 +12,7 @@ function typeaheadDirective($timeout) {
             isDisabled: '=disabled',
             isRequired: '=required'
         },
-        templateUrl: '/np-controller/templates/typeahead.html',
+        templateUrl: config.client_url + 'np-controller/templates/typeahead.html',
         link: function (scope, elem, attr, ctrl) {
             var field = scope.field ? scope.field.split(', ') : false;
 

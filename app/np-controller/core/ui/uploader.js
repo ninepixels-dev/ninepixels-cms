@@ -11,18 +11,23 @@ function npUploaderCtrl($scope, FileUploader, token) {
     });
 
     uploader.onBeforeUploadItem = function (item) {
+        var additionals = _.clone($scope.additional);
         if ($scope.additional.gallery) {
-            $scope.additional.gallery = $scope.additional.gallery.id;
+            additionals.gallery = $scope.additional.gallery.id;
         }
-        item.formData = [$scope.additional];
+        item.formData = [additionals];
+    };
+
+    uploader.onCompleteAll = function () {
+//        document.location.reload();
     };
 }
 
-npUploader.$inject = ['api', 'assets'];
-function npUploader(api, assets) {
+npUploader.$inject = ['api', 'assets', 'config'];
+function npUploader(api, assets, config) {
     return {
         controller: npUploaderCtrl,
-        templateUrl: '/np-controller/templates/uploader.html',
+        templateUrl: config.client_url + 'np-controller/templates/uploader.html',
         link: function (scope, elem, attr, ctrl) {
             scope.galleries = assets.getAsset('galleries');
 

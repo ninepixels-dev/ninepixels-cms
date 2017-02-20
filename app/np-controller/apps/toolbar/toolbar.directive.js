@@ -1,9 +1,9 @@
 'use strict';
 
-npToolbar.$inject = ['$cookies', '$window', 'assets'];
-function npToolbar($cookies, $window, assets) {
+npToolbar.$inject = ['$cookies', '$window', 'assets', 'config'];
+function npToolbar($cookies, $window, assets, config) {
     return {
-        templateUrl: '/np-controller/templates/toolbar.html',
+        templateUrl: config.client_url + 'np-controller/templates/toolbar.html',
         link: function (scope) {
             scope.user = $cookies.getObject('user');
 

@@ -10,15 +10,13 @@ module.exports = function (grunt) {
             'node_modules/angular-material/angular-material.min.js',
             'node_modules/angular-sanitize/angular-sanitize.min.js',
             'node_modules/angular-translate/angular-translate.min.js',
-            'node_modules/angular-ui-bootstrap/ui-bootstrap.min.js',
+            'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
             'node_modules/angular-file-upload/dist/angular-file-upload.min.js',
             'node_modules/angular-file-saver/dist/angular-file-saver.bundle.min.js',
             'node_modules/angular-loading-bar/build/loading-bar.min.js',
             'node_modules/underscore/underscore-min.js',
-            'node_modules/moment/min/moment.min.js',
             'node_modules/fullcalendar/dist/fullcalendar.min.js',
             'node_modules/fullcalendar/dist/locale/sr.js',
-            'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
             'node_modules/intl-tel-input/build/js/intlTelInput.min.js',
             'node_modules/medium-editor/dist/js/medium-editor.min.js',
             'node_modules/medium-editor-tables/dist/js/medium-editor-tables.min.js'
@@ -28,13 +26,13 @@ module.exports = function (grunt) {
             'node_modules/angular-loading-bar/build/loading-bar.min.css',
             'node_modules/fullcalendar/dist/fullcalendar.min.css',
             'node_modules/font-awesome/css/font-awesome.min.css',
-            'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
             'node_modules/medium-editor/dist/css/medium-editor.min.css',
             'node_modules/medium-editor/dist/css/themes/flat.min.css',
             'node_modules/medium-editor-tables/dist/css/medium-editor-tables.min.css'
         ],
         controller: [
             'app/np-controller/config.js',
+
             'app/np-controller/apps/toolbar/toolbar.directive.js',
             'app/np-controller/apps/toolbar/user.controller.js',
             'app/np-controller/apps/toolbar/page.controller.js',
@@ -63,7 +61,9 @@ module.exports = function (grunt) {
     var app = {
         js: [
             'node_modules/jquery/dist/jquery.js',
+            'node_modules/moment/min/moment.min.js',
             'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
             'node_modules/owl.carousel/dist/owl.carousel.min.js',
             'node_modules/fancybox/dist/js/jquery.fancybox.js',
 
@@ -73,7 +73,9 @@ module.exports = function (grunt) {
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'node_modules/fancybox/dist/css/jquery.fancybox.css',
+            'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
             'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
+            'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
             '.tmp/app.css'
         ]
     };
@@ -105,7 +107,8 @@ module.exports = function (grunt) {
         cssmin: {
             options: {
                 banner: '/*! Nine Pixels Seed 0.0.1 | Nemanja Pavlovic @ Nine Pixels | MIT Licensed */',
-                livereload: true
+                livereload: true,
+                report: 'gzip'
             },
             vendor: {
                 files: {
@@ -121,12 +124,10 @@ module.exports = function (grunt) {
 
         uglify: {
             options: {
-                beautify: true,
                 mangle: false,
                 livereload: true,
                 sourceMap: true,
-                sourceMapIncludeSources: true,
-                banner: '/*! Nine Pixels Seed 0.0.1 | Nemanja Pavlovic @ Nine Pixels | MIT Licensed */'
+                sourceMapIncludeSources: true
             },
             vendor: {
                 files: {
@@ -140,6 +141,21 @@ module.exports = function (grunt) {
             },
             app: {
                 files: {
+                    'dist/np-assets/js/app.min.js': app.js
+                }
+            },
+            production: {
+                options: {
+                    banner: '/*! Nine Pixels Seed 0.0.1 | Nemanja Pavlovic @ Nine Pixels | MIT Licensed */',
+                    sourceMap: false,
+                    preserveComments: false,
+                    compress: {
+                        drop_console: true
+                    }
+                },
+                files: {
+                    'dist/np-assets/js/vendor.min.js': vendor.js,
+                    'dist/np-assets/js/controller.min.js': vendor.controller,
                     'dist/np-assets/js/app.min.js': app.js
                 }
             }
@@ -168,14 +184,22 @@ module.exports = function (grunt) {
                 files: [{
                         expand: true,
                         cwd: 'app/np-assets/images',
-                        src: ['**/*.{png,jpg,gif}'],
+                        src: ['**/*.{png,jpg,gif,svg}'],
                         dest: 'dist/np-assets/images/'
+                    }]
+            },
+            server: {
+                files: [{
+                        expand: true,
+                        cwd: 'api/web/uploads',
+                        src: ['**/*.{png,jpg,gif}'],
+                        dest: 'api/web/uploads'
                     }]
             }
         },
 
         copy: {
-            html: {
+            php: {
                 expand: true,
                 src: 'app/*.php',
                 dest: 'dist/',
@@ -184,6 +208,12 @@ module.exports = function (grunt) {
             fontAwesome: {
                 expand: true,
                 src: 'node_modules/font-awesome/fonts/*',
+                dest: 'dist/np-assets/fonts/',
+                flatten: true
+            },
+            fontBootstrap: {
+                expand: true,
+                src: 'node_modules/bootstrap/fonts/*',
                 dest: 'dist/np-assets/fonts/',
                 flatten: true
             },
@@ -212,7 +242,7 @@ module.exports = function (grunt) {
             },
             index: {
                 files: ['app/index.php', 'app/debug.php'],
-                tasks: ['copy:html']
+                tasks: ['copy:php']
             },
             less: {
                 files: ['app/np-assets/styles/*.less'],
@@ -257,6 +287,27 @@ module.exports = function (grunt) {
                     open: true
                 }
             }
+        },
+
+        ftp_push: {
+            prod: {
+                options: {
+                    authKey: "server",
+                    host: "hotelcitysavoy.com",
+                    dest: "/",
+                    port: 21,
+                    incrementalUpdates: false
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'dist',
+                        src: [
+                            "**/*"
+                        ]
+                    }
+                ]
+            }
         }
     });
 
@@ -265,9 +316,21 @@ module.exports = function (grunt) {
         'clean:structure',
         'less',
         'cssmin',
-        'uglify',
+        'uglify:vendor',
+        'uglify:controller',
+        'uglify:app',
         'htmlmin',
-        'imagemin',
+        'imagemin:dist',
+        'copy'
+    ]);
+
+    grunt.registerTask('production', [
+        'clean:structure',
+        'less',
+        'cssmin',
+        'uglify:production',
+        'htmlmin',
+        'imagemin:dist',
         'copy'
     ]);
 
@@ -275,5 +338,16 @@ module.exports = function (grunt) {
         'build',
         'php',
         'watch'
+    ]);
+
+    grunt.registerTask('production-server', [
+        'production',
+        'php',
+        'watch'
+    ]);
+
+    grunt.registerTask('production-deploy', [
+        'production',
+        'ftp_push'
     ]);
 };

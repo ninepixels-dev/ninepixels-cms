@@ -2,21 +2,11 @@
 
 'use strict';
 
-assetService.$inject = ['api'];
-function assetService(api) {
+assetService.$inject = ['api', '$cookies'];
+function assetService(api, $cookies) {
     var self = this;
 
-    var assets = {
-        pages: [],
-        items: [],
-        images: [],
-        components: [],
-        users: [],
-        galleries: [],
-        blogs: [],
-        products: [],
-        locales: []
-    };
+    var assets = {};
 
     this.getAllAssets = function () {
         return assets;
@@ -28,35 +18,49 @@ function assetService(api) {
 
     this.setAsset = function (_asset, value) {
         assets[_asset].push(value);
+        localStorage.setItem(_asset, JSON.stringify(assets[_asset]));
         return assets[_asset];
     };
 
     this.updateAsset = function (_asset, value) {
         self.removeAsset(_asset, value);
         self.setAsset(_asset, value);
+        localStorage.setItem(_asset, JSON.stringify(assets[_asset]));
         return assets[_asset];
     };
 
     this.removeAsset = function (_asset, value) {
         assets[_asset] = _.reject(assets[_asset], {id: value.id});
+        localStorage.setItem(_asset, JSON.stringify(assets[_asset]));
         return assets[_asset];
     };
 
-    this.initAsset = function (_asset) {
-        api(_asset).fetch().then(function (asset) {
+    this.initAsset = function (_asset, _path) {
+        api(_path || _asset).fetch().then(function (asset) {
             assets[_asset] = asset;
+            localStorage.setItem(_asset, JSON.stringify(asset));
         });
     };
 
-    self.initAsset('pages');
-    self.initAsset('items');
-    self.initAsset('images');
-    self.initAsset('components');
-    self.initAsset('users');
-    self.initAsset('galleries');
-    self.initAsset('blogs');
-    self.initAsset('products');
-    self.initAsset('locales');
+
+    if (window.location.search.substr(1) !== "toolbar=false") {
+        self.initAsset('pages');
+        self.initAsset('items');
+        self.initAsset('images');
+        self.initAsset('components');
+        self.initAsset('users');
+        self.initAsset('galleries');
+        self.initAsset('blogs');
+        self.initAsset('products');
+        self.initAsset('locales');
+    } else {
+        var items = localStorage.getItem('items');
+        assets['items'] = JSON.parse(items);
+        var images = localStorage.getItem('images');
+        assets['images'] = JSON.parse(images);
+        var galleries = localStorage.getItem('galleries');
+        assets['galleries'] = JSON.parse(galleries);
+    }
 }
 
 angular.module('ninepixels.assets', [])

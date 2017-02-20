@@ -1,10 +1,10 @@
 'use strict';
 
-login.$inject = [];
-function login() {
+login.$inject = ['config'];
+function login(config) {
     return {
         controller: loginRegisterCtrl,
-        templateUrl: '/np-controller/templates/login.html'
+        templateUrl: config.client_url + 'np-controller/templates/login.html'
     };
 }
 

@@ -1,7 +1,7 @@
 'use strict';
 
-npEditor.$inject = [];
-function npEditor() {
+npEditor.$inject = ['config'];
+function npEditor(config) {
     return {
         scope: {
             itemID: '=item',
@@ -10,7 +10,7 @@ function npEditor() {
             type: '@'
         },
         transclude: true,
-        templateUrl: '/np-controller/templates/np-editor.html',
+        templateUrl: config.client_url + 'np-controller/templates/np-editor.html',
         link: function (scope, elem, attr, ctrl) {
             var floatingPanel = elem.find('.floating-panel');
 

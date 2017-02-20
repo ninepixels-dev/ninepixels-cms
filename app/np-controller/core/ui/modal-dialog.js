@@ -2,8 +2,8 @@
 
 'use strict';
 
-modalDialogService.$inject = ['$uibModal'];
-function modalDialogService($uibModal) {
+modalDialogService.$inject = ['$uibModal', 'config'];
+function modalDialogService($uibModal, config) {
     /*
      * Show classic modal
      */
@@ -16,7 +16,7 @@ function modalDialogService($uibModal) {
         return new Promise(function (resolve, reject) {
             return $uibModal.open({
                 size: 'md',
-                templateUrl: '/np-controller/templates/confirmation-dialog.html',
+                templateUrl: config.client_url + 'np-controller/templates/confirmation-dialog.html',
                 controller: function ($uibModalInstance) {
                     this.message = message || 'Da li ste sigurni?';
                     this.accept = accept || 'Prihvati';
