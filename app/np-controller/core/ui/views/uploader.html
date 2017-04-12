@@ -63,10 +63,10 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li ng-repeat="gallery in galleries track by gallery.id">
+                    <li class="separate-line"><a class="btn-action" ng-click="addGallery()">Dodaj novu galeriju</a>
+                    <li ng-repeat="gallery in galleries | orderBy: '-id' track by gallery.id">
                         <a ng-click="pickGallery(gallery)">{{gallery.name}}</a>
                     </li>
-                    <li class="separate-line"><a class="btn-action" ng-click="addGallery()">Dodaj novu galeriju</a>
                 </ul>
             </div>
         </div>

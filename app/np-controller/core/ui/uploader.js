@@ -2,8 +2,8 @@
 
 'use strict';
 
-npUploaderCtrl.$inject = ['$scope', 'FileUploader', 'token'];
-function npUploaderCtrl($scope, FileUploader, token) {
+npUploaderCtrl.$inject = ['$scope', 'FileUploader', 'token', 'assets'];
+function npUploaderCtrl($scope, FileUploader, token, assets) {
     var uploader = $scope.uploader = new FileUploader({
         method: 'POST',
         headers: token.getToken(),
@@ -18,9 +18,10 @@ function npUploaderCtrl($scope, FileUploader, token) {
         item.formData = [additionals];
     };
 
-    uploader.onCompleteAll = function () {
-//        document.location.reload();
+    uploader.onCompleteItem = function (item, res) {
+        return assets.setAsset('images', res.item);
     };
+
 }
 
 npUploader.$inject = ['api', 'assets', 'config'];
@@ -45,6 +46,7 @@ function npUploader(api, assets, config) {
                 if (gallery !== null) {
                     api('galleries').add({name: gallery}).then(function (res) {
                         scope.galleries = assets.setAsset('galleries', res.item);
+                        return scope.pickGallery(res.item);
                     });
                 }
             };

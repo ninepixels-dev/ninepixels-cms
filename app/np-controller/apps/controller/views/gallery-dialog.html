@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h4>Galerija</h4>
+    <button type="button" class="btn btn-default pull-right" ng-click="galleryCtrl.cancel()">X</button>
+</div>
+
+<div class="modal-body">
+    <uib-tabset type="tabs">
+        <uib-tab index="0" heading="Galerija">
+            <div class="row">
+                <div class="form-group">
+                    <label for="searchPage">Pretraga</label>
+                    <input type="text" class="form-control" id="searchPage" ng-model="search.name" ng-trim="false">
+                </div>
+            </div>
+            <div class="ninepixels_gallery-album" ng-if="!pickedGallery" ng-repeat="gallery in galleries| filter:search | orderBy: 'name' track by gallery.id" ng-click="galleryCtrl.pick(gallery)">
+                <img ng-repeat="pGallery in galleryList[gallery.id]| limitTo:4" src="{{server_url + pGallery.url}}">
+                <label>{{ gallery.name}}</label>
+            </div>
+
+            <form name="galleryMeta" class="row" ng-repeat="image in pickedGallery" ng-if="pickedGallery">
+                <div class="col-md-2"><img src="{{image.size === 'video' ? 'http://img.youtube.com/vi/' + image.url + '/0.jpg' : server_url + image.url}}" alt="" /></div>
+                <div class="col-md-3"><input type="text" class="form-control" ng-model="image.title" placeholder="Title" /></div>
+                <div class="col-md-3"><input type="text" class="form-control" ng-model="image.alt" placeholder="Alt" /></div>
+                <div class="col-md-3"><input type="text" class="form-control" ng-model="image.description" placeholder="Description" /></div>
+                <div class="col-md-1"><i class="fa fa-trash-o" ng-click="galleryCtrl.delete(image)"></i></div>
+                <div class="col-md-12"><hr></div>
+            </form>
+        </uib-tab>
+
+        <uib-tab index="1" heading="Dodaj slike" ng-if="!pickedGallery">
+            <div class="ninepixels_gallery-uploader" np-uploader></div>
+        </uib-tab>
+
+        <uib-tab index="2" heading="Dodaj video" ng-if="!pickedGallery">
+            <div class="form-group">
+                <label for="galleryVideo">Video</label>
+                <input type="text" ng-model="video.url" class="form-control" id="galleryVideo">
+            </div>
+            <div class="form-group">
+                <label for="item-image">Galerija</label>
+                <div class="dropdown">
+                    <button class="btn btn-default btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+                        {{video.gallery.name|| 'Please select'}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="gallery in galleries| orderBy: '-id'">
+                            <a ng-click="video.gallery = gallery">{{gallery.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-ninepixels" ng-click="galleryCtrl.addVideo(video)">Sačuvaj</button>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+
+<div class="modal-footer">
+    <button type="button" ng-if="pickedGallery" class="btn btn-ninepixels" ng-click="galleryCtrl.update(pickedGallery)">Sačuvaj</button>
+    <button type="button" class="btn btn-ninepixels" ng-click="galleryCtrl.cancel()">Zatvori</button>
+</div>

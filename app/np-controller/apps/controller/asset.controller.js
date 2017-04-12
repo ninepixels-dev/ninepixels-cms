@@ -2,50 +2,69 @@
 
 'use strict';
 
-npAssetController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
-function npAssetController($scope, api, modalDialog, assets, config) {
-    this.viewGallery = function () {
-        $scope.images = assets.getAsset('images');
-        $scope.galleries = assets.getAsset('galleries');
-        $scope.server_url = config.server_url + 'uploads/thumbs/';
-        $scope.filteredGallery = [];
+npGalleryController.$inject = ['$scope', 'api', 'assets', 'config'];
+function npGalleryController($scope, api, assets, config) {
+    var self = this;
 
-        var params = {
-            scope: $scope,
-            size: 'lg',
-            templateUrl: config.client_url + 'np-controller/templates/images-dialog.html'
-        };
+    $scope.images = assets.getAsset('images');
+    $scope.galleries = assets.getAsset('galleries');
+    $scope.server_url = config.server_url + 'uploads/thumbs/';
+    $scope.galleryList = [];
 
-        var modal = modalDialog.showModal(params);
-
-        _.each($scope.galleries, function (item) {
-            $scope.filteredGallery[item.id] = _.filter($scope.images, function (obj) {
-                return obj.gallery && obj.gallery.id === item.id;
-            });
+    _.each($scope.galleries, function (item) {
+        $scope.galleryList[item.id] = _.filter($scope.images, function (obj) {
+            return obj.gallery && obj.gallery.id === item.id;
         });
+    });
 
-        $scope.pickGallery = function (gallery) {
-            if (!gallery) {
-                return delete $scope.galleryItems;
-            }
+    this.pick = function (_gallery) {
+        if (!_gallery) {
+            return delete $scope.pickedGallery;
+        }
 
-            return $scope.galleryItems = $scope.filteredGallery[gallery.id];
-        };
-
-        $scope.delete = function (image) {
-            image.active = 0;
-            api('images').update(image).then(function (res) {
-                if (res.status === 200) {
-                    $scope.images = assets.removeAsset('images', image);
-                }
-            });
-        };
-
-        $scope.cancel = function () {
-            modal.close();
-        };
+        return $scope.pickedGallery = $scope.galleryList[_gallery.id];
     };
 
+    this.delete = function (image) {
+        image.active = 0;
+        image = _.omit(image, 'gallery');
+
+        return api('images').update(image).then(function (res) {
+            if (res.status === 200) {
+                $scope.images = assets.removeAsset('images', image);
+            }
+        });
+    };
+
+    this.update = function (pickedGallery) {
+        return angular.forEach(pickedGallery, function (image) {
+            image = _.omit(image, 'gallery');
+            return api('images').update(image).then(function (res) {
+                $scope.images = assets.updateAsset('images', res.item);
+            });
+        });
+    };
+
+    this.addVideo = function (_video) {
+        _video.size = 'video';
+        if (_video.gallery) {
+            _video.gallery = _video.gallery.id;
+        }
+        return api('images').add(_video).then(function (res) {
+            $scope.images = assets.setAsset('images', res.item);
+        });
+    };
+
+    this.cancel = function () {
+        if ($scope.pickedGallery) {
+            return self.pick();
+        }
+        return $scope.$close();
+    };
+}
+
+npLocalesController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npLocalesController($scope, api, modalDialog, assets, config) {
     this.localesManager = function () {
         $scope.locales = assets.getAsset('locales');
         $scope.view = 'list';
@@ -101,7 +120,10 @@ function npAssetController($scope, api, modalDialog, assets, config) {
             modal.close();
         };
     };
+}
 
+npComponentController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npComponentController($scope, api, modalDialog, assets, config) {
     this.componentManager = function () {
         $scope.components = assets.getAsset('components');
         $scope.view = 'list';
@@ -165,5 +187,23 @@ function npAssetController($scope, api, modalDialog, assets, config) {
     };
 }
 
-angular.module('ninepixels.toolbar')
-        .controller('npAssetController', npAssetController);
+npAssetsController.$inject = ['modalDialog', 'config'];
+function npAssetsController(modalDialog, config) {
+    this.galleries = function () {
+        return modalDialog.showModal({
+            size: 'lg',
+            controller: npGalleryController,
+            controllerAs: 'galleryCtrl',
+            bindToController: true,
+            templateUrl: config.client_url + 'np-controller/templates/gallery-dialog.html'
+        });
+    };
+    this.locales = function () {};
+    this.components = function () {};
+}
+
+angular.module('ninepixels.controller')
+        .controller('npAssetsCtrl', npAssetsController)
+        .controller('npGalleryCtrl', npGalleryController)
+        .controller('npLocalesCtrl', npLocalesController)
+        .controller('npComponentCtrl', npComponentController);

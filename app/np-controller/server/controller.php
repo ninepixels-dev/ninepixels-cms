@@ -4,15 +4,15 @@
 ob_start("ob_gzhandler");
 
 // Set defaults
-$GLOBALS['SERVER_URL'] = 'http://localhost:8000/';
-$GLOBALS['CLIENT_URL'] = 'http://localhost:8100/';
+$GLOBALS['SERVER_URL'] = '../../api/web/';
+$GLOBALS['CLIENT_URL'] = 'http://te-cooling.rs/';
 $GLOBALS['LOCALE'] = '';
 
-$GLOBALS['WITHOUT_TOOLBAR'] = isset($_GET['toolbar']);
+$GLOBALS['WITHOUT_TOOLBAR'] = isset($_GET['toolbar']) ? '?toolbar=false' : false;
 
 // If URL is np-admin, open administratin page
 if (parseURL() === 'np-admin') {
-    return $GLOBALS['page'] = (object) array('id' => '0', 'name' => 'login-page', 'title' => 'Login Page', 'description' => 'Login Page');
+    return $GLOBALS['page'] = (object) array('id' => '0', 'name' => 'login-page', 'title' => 'Login Page', 'description' => 'Login Page', 'template' => 'login-page');
 }
 
 // Load assets
@@ -20,7 +20,8 @@ $assets = array(
     'pages' => json_decode(file_get_contents($GLOBALS['SERVER_URL'] . 'pages')) ?: array(),
     'locales' => json_decode(file_get_contents($GLOBALS['SERVER_URL'] . 'locales')) ?: array(),
     'blogs' => json_decode(file_get_contents($GLOBALS['SERVER_URL'] . 'blogs')) ?: array(),
-    'products' => json_decode(file_get_contents($GLOBALS['SERVER_URL'] . 'products')) ?: array()
+    'products' => json_decode(file_get_contents($GLOBALS['SERVER_URL'] . 'products')) ?: array(),
+    'options' => json_decode(file_get_contents($GLOBALS['SERVER_URL'] . 'options')) ?: array()
 );
 
 // Merge all page-type data
@@ -60,12 +61,12 @@ function parseURL($separated = false) {
     if ($separated) {
         return explode('/', $explode[0]);
     }
-    return empty($clean) ? 'homepage' : $clean;
+    return empty($clean) || $clean === 'index.php' ? 'homepage' : $clean;
 }
 
 function pageNotFound() {
-    return $GLOBALS['page'] = (object) array('id' => '-1', 'name' => 'Not Found',
-                'template' => 'error_404.php', 'title' => 'Page Not Found', 'description' => 'Page Not Found');
+    return $GLOBALS['page'] = (object) array('id' => '-1', 'name' => 'Strana nije pronadjena', 'show_header' => '1', 'show_footer' => '1',
+                'template' => 'error_404.php', 'title' => 'Strana nije pronadjena', 'description' => 'Page Not Found');
 }
 
 function npEditor($element, $class, $item, $withoutContent = false) {
@@ -75,7 +76,7 @@ function npEditor($element, $class, $item, $withoutContent = false) {
     echo '<' . $element . ' ';
     echo 'class="' . $class . $classes . $visible . '" ';
     if (isset($_COOKIE['user'])) {
-        echo 'np-editor data-item="' . $item->id . '" data-identifier="' . $item->identifier . '" data-page="' . $GLOBALS['page']->id . '"';
+        echo 'np-toolbar data-item="' . $item->id . '" data-identifier="' . $item->identifier . '" data-page="' . $GLOBALS['page']->id . '"';
     }
     echo '>';
 
@@ -88,28 +89,38 @@ function npEditor($element, $class, $item, $withoutContent = false) {
 function npImage($item, $classes = '', $thumbs = false) {
     if (isset($item->image)) {
         $thumbs = $thumbs ? 'uploads/' . $thumbs . '/' : 'uploads/';
-        echo '<img class="' . $classes . '" src="' . $GLOBALS['SERVER_URL'] . $thumbs . $item->image->url . '" alt="' . $item->image->alt . '" title="' . $item->image->title . '">';
+        echo '<img class="' . $classes . '" src="' . $GLOBALS['SERVER_URL'] . $thumbs . $item->image->url . '" alt="' . (property_exists($item->image, 'alt') ? $item->image->alt : '') . '" title="' . (property_exists($item->image, 'title') ? $item->image->title : '') . '"/>';
     }
 }
 
-function getContent($path) {
-    $file = file_get_contents($GLOBALS['SERVER_URL'] . $GLOBALS['LOCALE'] . $path);
+function getContent($path, $filter = false) {
+    $build_filter = $filter ? '?' . http_build_query($filter) : '';
+
+    $file = file_get_contents($GLOBALS['SERVER_URL'] . $GLOBALS['LOCALE'] . $path . $build_filter);
     $json = json_decode($file);
     if (!empty($json)) {
         return $json;
-    } else {
-        return [];
     }
+    return [];
 }
 
-function filterBy($items, $key, $value) {
+function filterBy($items, $key, $value, $page = false, $sort = false) {
     $array = array_filter($items, function($obj) use ($key, $value) {
-        return $obj->{$key} === $value ? true : false;
+        if (property_exists($obj, $key)) {
+            return $obj->{$key} == $value ? true : false;
+        }
     });
 
+    if (empty($array) && isset($_COOKIE['user']) && !$page) {
+        return array((object) array("id" => 0, "identifier" => $value, "structure" => '<div class="np-item-holder-text">' . $value . '</div>', "classes" => "np-item-holder"));
+    }
 
-    if (empty($array) && isset($_COOKIE['user'])) {
-        return array((object) array("id" => 0, "identifier" => $value, "structure" => '', "classes" => "np-item-holder"));
+    if ($sort) {
+        usort($array, function($a, $b) use ($sort) {
+            $sortA = property_exists($a, $sort) ? $sort : 'id';
+            $sortB = property_exists($b, $sort) ? $sort : 'id';
+            return $a->{$sortA} - $b->{$sortB};
+        });
     }
 
     return $array;
@@ -117,4 +128,10 @@ function filterBy($items, $key, $value) {
 
 // Set reusable data
 $GLOBALS['PAGES'] = $assets['pages'];
-setcookie("page", json_encode($GLOBALS['page']));
+$GLOBALS['OPTIONS'] = $assets['options'];
+
+if (isset($_COOKIE['page'])) {
+    $_COOKIE['page'] = json_encode($GLOBALS['page']);
+} else {
+    setcookie("page", json_encode($GLOBALS['page']));
+}

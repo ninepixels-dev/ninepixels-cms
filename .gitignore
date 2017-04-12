@@ -9,3 +9,4 @@ tmp
 dist/
 nbproject/
 production
+app/np-templates/

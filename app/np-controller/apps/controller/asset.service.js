@@ -2,8 +2,8 @@
 
 'use strict';
 
-assetService.$inject = ['api', '$cookies'];
-function assetService(api, $cookies) {
+assetService.$inject = ['api'];
+function assetService(api) {
     var self = this;
 
     var assets = {};
@@ -53,6 +53,7 @@ function assetService(api, $cookies) {
         self.initAsset('blogs');
         self.initAsset('products');
         self.initAsset('locales');
+        self.initAsset('options');
     } else {
         var items = localStorage.getItem('items');
         assets['items'] = JSON.parse(items);
@@ -63,5 +64,5 @@ function assetService(api, $cookies) {
     }
 }
 
-angular.module('ninepixels.assets', [])
+angular.module('ninepixels.controller')
         .service('assets', assetService);

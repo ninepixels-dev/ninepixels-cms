@@ -50,5 +50,5 @@ function npUsersController($scope, api, modalDialog, assets, config) {
 
 }
 
-angular.module('ninepixels.toolbar')
+angular.module('ninepixels.controller')
         .controller('npUsersController', npUsersController);

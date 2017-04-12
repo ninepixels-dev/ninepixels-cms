@@ -50,5 +50,5 @@ function npPickImage(assets, modalDialog, config) {
     };
 }
 
-angular.module('ninepixels.editor')
+angular.module('ninepixels.toolbar')
         .directive('npPickImage', npPickImage);

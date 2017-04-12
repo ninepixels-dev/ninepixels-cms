@@ -1,0 +1,194 @@
+.show-editing { display: none !important; }
+
+body.editing {
+    .container-fluid.header { top: 40px; }
+
+    .show-editing { display: inline-block !important; }
+}
+
+.container-fluid.header {
+    padding-top: 13px;
+    padding-bottom: 13px;
+
+    .logo-black { display: none; }
+
+    .hamburger-menu-dark { display: none; }
+
+    .close-button { display: none; }
+
+    .col-md-9 { text-align: right; }
+
+    &.dark-one, &.meta-menu {
+
+        background-color: white;
+
+        .main-navigation, .meta-navigation {
+            > li, a { color: black; }
+        }
+
+        .logo-white { display: none; }
+        .logo-black { display: block; }
+
+        .hamburger-menu { display: none; }
+        .hamburger-menu-dark { display: block; }
+    }
+}
+
+.main-navigation, .meta-navigation {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    list-style: none;
+
+    > li, a {
+        display: inline-block;
+        vertical-align: middle;
+
+        font-size: 17px;
+        line-height: 66px;
+        color: white;
+        padding: 0 20px;
+
+        &:first-of-type { padding-left: 0; }
+        &:last-of-type { padding-right: 0; }
+
+        &:hover {
+            color: #2db8b5 !important;
+            text-decoration: none;
+
+            > ul { display: block; }
+        }
+
+        > ul {
+            display: none;
+            position: absolute;
+            background-color: white;
+            padding: 0px 60px;
+            min-width: 400px;
+            margin-left: -160px;
+            text-align: center;
+
+            li {
+                display: block;
+                line-height: 40px;
+                border-top: 1px solid #d5d5d5;
+                a {
+                    font-size: 17px;
+                    line-height: 41px;
+                    color: black;
+                }
+            }
+        }
+    }
+}
+
+.meta-navigation { display: none; }
+
+.meta-nav-button, .share-button {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 30px;
+}
+
+.meta-nav-button { padding-left: 60px; cursor: pointer; }
+
+.share-button {
+    position: relative;
+    cursor: pointer;
+    padding-right: 0px;
+
+    .share-button-dropdown {
+        position: absolute;
+        left: 17px; top: 0;
+        max-height: 0;
+        overflow: hidden;
+        -webkit-transition: .5s;
+        transition: .5s;
+
+        padding-top: 30px;
+        .at-share-btn {
+            display: block !important;
+            margin: 10px !important;
+        }
+    }
+
+    &:hover {
+        .share-button-dropdown {
+            max-height: 400px;
+        }
+    }
+}
+
+.container-fluid.header.meta-menu {
+    .main-navigation { display: none; }
+    .meta-navigation { display: inline-block; }
+    .close-button { display: block; }
+    .hamburger-menu-dark { display: none; }
+}
+
+.mobile-navigation {
+    display: none;
+
+    position: absolute;
+    top: 10px;
+    right: 60px;
+
+    .mobile-nav-button { float: right; }
+
+    &.active {
+        .mobile-main-navigation {
+            display: block;
+        }
+    }
+
+    .mobile-main-navigation {
+        display: none;
+        max-width: 400px;
+        margin-top: 35px;
+
+        position: absolute;
+        left: -270px;
+
+        max-height: calc(~'100vh - 80px');
+        overflow: auto;
+        li {
+            width: 100%;
+            min-width: 320px;
+            text-align: center;
+            margin-bottom: -1px;
+            list-style: none;
+            border: 1px solid black;
+            background-color: white;
+
+            &:last-of-type { margin-bottom: 0; }
+            
+            a {
+                display: block;
+                font-size: 17px;
+                line-height: 17px;
+                color: black;
+                padding: 20px 50px;
+            }
+            &:hover {
+                background-color: #2db8b5;
+                > a { color: white; }
+                > ul { max-height: 1000px; }
+            }
+            ul {
+                max-height: 0;
+                overflow: hidden;
+                padding-left: 0;
+
+                -webkit-transition: all .5s;
+                transition: all .5s;
+                li {
+                    border-left: 0;
+                    border-right: 0;
+                    background-color: #e6e6e6;
+                }
+            }
+        }
+    }
+
+    .mobile-meta-navigation { max-height: 0; }
+}

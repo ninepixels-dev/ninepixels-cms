@@ -1,0 +1,178 @@
+* {
+    font-family: 'Work Sans', sans-serif;
+}
+
+img { max-width: 100%; }
+
+h1 {
+    font-size: 53px;
+    line-height: 65px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 25px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 25px;
+    line-height: 30px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+h4 {
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.content-left-bar ul, .tab-content ul{
+    padding-left: 30px;
+}
+
+.content-left-bar li, .tab-content li, p {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 400;
+    color: #5d5d5d;
+}
+
+.content-left-bar li, .tab-content li{
+    margin-bottom: 15px;
+    list-style-type: none;
+    padding-left: 20px;
+    position: relative;
+}
+
+.content-left-bar li:before, .tab-content li:before{
+    content: "•";
+    position: absolute;
+    color: #f7b130;
+    left: 0px;
+    top: 0px;
+}
+
+q {
+    font-size: 43px;
+    line-height: 50px;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: #222222;
+}
+
+a:hover, a:focus, a:active { text-decoration: none; outline: none; }
+
+@media (min-width: 1570px) {
+    .container.large-grid { width: 1600px; }
+}
+
+.floating-contact-button {
+    width: 85px;
+    padding: 25px 25px 25px 25px;
+
+    position: fixed;
+    bottom: 30px;
+    right: 60px;
+    z-index: 98;
+
+    font-size: 0px;
+    line-height: 17px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: white;
+
+    cursor: pointer;
+
+    /* padding: 25px 85px 25px 25px; */
+    background-color: #2db8b5;
+    background-image: url('../images/contact_button.png');
+    background-position: center right 25px;
+    background-repeat: no-repeat;
+
+    &:hover, &:focus, &:active {
+        color: white;
+    }
+}
+
+
+.content-left-bar table {
+    text-align: center;
+
+    tr {
+        border-bottom: 1px solid #e6e6e6;
+
+        > td {
+            padding: 15px;
+            border-right: 1px solid #b1b1b1;
+
+            &:first-of-type {
+                text-align: left;
+                border-left: 1px solid #b1b1b1;
+            }
+
+            > h4 {
+                margin: 0;
+            }
+
+            > h5 {
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+
+            > h6 {
+                color: red;
+                margin: 0;
+            }
+
+            p > span {
+                font-size: 16px;
+                line-height: 20px;
+            }
+        }
+
+        &:first-of-type {
+            background-color: #e6e6e6;
+        }
+    }
+
+    p { margin: 0; }
+
+}
+
+.play-button {
+    position: absolute;
+    width: 62px;
+    height: 62px;
+    cursor: pointer;
+
+    top: 50%;
+    left: 50%;
+    margin-top: -31px;
+    margin-left: -31px;
+
+    background-image: url(../images/play_button.png);
+}
+
+a.fancybox {
+    position: relative;
+}
+
+.page_404 {
+    margin-top: 210px;
+    margin-bottom: 150px;
+
+    .heading_404 {
+        font-weight: 700;
+        font-size: 52px;
+        line-height: 52px;
+        margin: 22px 0 17px 0;
+    }
+    description_404 {
+        font-size: 24px;
+    }
+}

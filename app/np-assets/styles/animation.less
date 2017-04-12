@@ -1,0 +1,466 @@
+/* Base Settings*/
+.tecooling-animation { text-align: center; }
+
+.tecooling-animation-container {
+    position: relative;
+    display: inline-block;
+    width: 940px;
+    height: 756px;
+    clear: both;
+}
+
+.tecooling-animation-container .base {
+    width: 100%;
+    height: auto;
+}
+
+.tecooling-animation-container * {
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    -ms-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+/* Water Lines */
+.tecooling-animation-container .water-line-1 {
+    position: absolute;
+    width: 5px; height: 0px;
+    top: 571px; left: 895px;
+
+    -webkit-animation-name: waterLine1;
+    animation-name: waterLine1;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+
+    background-color: #65CEEC;
+}
+@keyframes waterLine1 {
+    0% { height: 0px; }
+    100% { height: 117px; }
+}
+
+.tecooling-animation-container .water-line-2 {
+    position: absolute;
+    width: 0px; height: 5px;
+    top: 683px; left: 895px;
+
+    -webkit-animation-name: waterLine2;
+    animation-name: waterLine2;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+
+    animation-delay: 1s;
+
+    background-color: #65CEEC;
+}
+@keyframes waterLine2 {
+    0% { width: 0px; left: 895px; }
+    100% { width: 155px; left: 745px; }
+}
+
+.tecooling-animation-container .water-line-3 {
+    position: absolute;
+    width: 5px; height: 0px;
+    top: 688px; left: 745px;
+
+    -webkit-animation-name: waterLine3;
+    animation-name: waterLine3;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+
+    animation-delay: 2s;
+
+    background-color: #65CEEC;
+}
+@keyframes waterLine3 {
+    0% { height: 0px; top: 688px; }
+    100% { height: 77px; top: 611px; }
+}
+
+.tecooling-animation-container .water-line-4 {
+    position: absolute;
+    width: 0px; height: 5px;
+    top: 611px; left: 748px;
+
+    -webkit-animation-name: waterLine4;
+    animation-name: waterLine4;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+
+    animation-delay: 3s;
+
+    background-color: #65CEEC;
+}
+@keyframes waterLine4 {
+    0% { width: 0px; left: 748px; }
+    100% { width: 27px; left: 721px; }
+}
+
+/* Low Pressure */
+.tecooling-animation-container .pressure-clock-1 {
+    position: absolute;
+    top: 581px;
+    left: 489px;
+
+    -webkit-animation-name: pressureClock;
+    animation-name: pressureClock;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+
+    animation-delay: 3.5s;
+}
+
+.tecooling-animation-container .pressure-clock-2 {
+    position: absolute;
+    top: 581px;
+    left: 692px;
+
+    -webkit-animation-name: pressureClock2;
+    animation-name: pressureClock;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+
+    animation-delay: 3.5s;
+}
+@keyframes pressureClock {
+    0% {
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    50% {
+        -ms-transform: rotate(-125deg);
+        -webkit-transform: rotate(-125deg);
+        transform: rotate(-125deg);
+    }
+    100% {
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+.tecooling-animation-container .low-pressure-tubing {
+    position: absolute;
+    width: 0;
+    top: 601px;
+    left: 489px;
+    overflow: hidden;
+
+    -webkit-animation-name: lowPressureTubing;
+    animation-name: lowPressureTubing;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+
+    animation-delay: 5s;
+}
+@keyframes lowPressureTubing {
+    0% { width: 0; left: 489px; }
+    100% { width: 304px; left: 185px }
+}
+
+.tecooling-animation-container .l-pressure-word {
+    position: absolute;
+    top: 635px;
+    left: 270px;
+    opacity: 0;
+
+    -webkit-animation-name: lowPressureWord;
+    animation-name: lowPressureWord;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+
+    animation-delay: 5.5s;
+}
+@keyframes lowPressureWord {
+    100% { opacity: 1; }
+}
+
+/* Engine Pump */
+.tecooling-animation-container .engine-pump-container {
+    position: absolute;
+    top: 543px;
+    left: 62px;
+    overflow: hidden;
+
+    width: 40px;
+    height: 27px;
+
+    -webkit-animation-name: enginePump;
+    animation-name: enginePump;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+
+    animation-delay: 6s;
+}
+@keyframes enginePump {
+    0% { top: 543px; height: 27px; }
+    50% { top: 523px; height: 47px; }
+    100% { top: 543px; height: 27px; }
+}
+
+.tecooling-animation-container .gear-big {
+    position: absolute;
+    top: 580px;
+    left: 79px;
+}
+
+.tecooling-animation-container .gear-m {
+    position: absolute;
+    top: 625px;
+    left: 111px;
+}
+
+.tecooling-animation-container .gear-s {
+    position: absolute;
+    top: 601px;
+    left: 131px;
+}
+
+.tecooling-animation-container .gear-big,
+.tecooling-animation-container .gear-m,
+.tecooling-animation-container .gear-s {
+    -webkit-animation-name: gearsRotate;
+    animation-name: gearsRotate;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+
+    animation-delay: 6s;
+}
+@keyframes gearsRotate {
+    0% {
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -ms-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+/* High Pressure */
+.tecooling-animation-container .high-pressure-line-1 {
+    position: absolute;
+    width: 4px; height: 0px;
+    top: 516px; left: 80px;
+
+    -webkit-animation-name: highPressureLine1;
+    animation-name: highPressureLine1;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+
+    animation-delay: 6.5s;
+
+    background-color: #EDC565;
+}
+@keyframes highPressureLine1 {
+    0% { height: 0px; top: 516px; }
+    100% { height: 35px; top: 481px; }
+}
+
+.tecooling-animation-container .high-pressure-line-2 {
+    position: absolute;
+    width: 0px; height: 4px;
+    top: 481px; left: 80px;
+
+    -webkit-animation-name: highPressureLine2;
+    animation-name: highPressureLine2;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+
+    animation-delay: 7s;
+
+    background-color: #EDC565;
+}
+@keyframes highPressureLine2 {
+    0% { width: 0px;}
+    100% { width: 855px; }
+}
+
+.tecooling-animation-container .h-pressure-word {
+    position: absolute;
+    top: 506px;
+    left: 420px;
+    opacity: 0;
+
+    -webkit-animation-name: highPressureWord;
+    animation-name: highPressureWord;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+
+    animation-delay: 8s;
+}
+@keyframes highPressureWord {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.tecooling-animation-container .high-pressure-line-3 {
+    position: absolute;
+    width: 4px; height: 0px;
+    top: 484px; left: 933px;
+
+    -webkit-animation-name: highPressureLine3;
+    animation-name: highPressureLine3;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+
+    animation-delay: 9s;
+
+    background-color: #EDC565;
+}
+@keyframes highPressureLine3 {
+    0% { top: 484px; height: 0px; }
+    100% { top: 366px; height: 118px; }
+}
+
+/* Steam */
+.tecooling-animation-container [class^="steam-"] {
+    height: 0; overflow: hidden;
+
+    -webkit-animation-name: steamSize;
+    animation-name: steamSize;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+}
+@keyframes steamSize {
+    0% { height: 80px; }
+    50% { height: 116px; }
+    100% { height: 80px; }
+}
+
+.tecooling-animation-container .steam-1 {
+    position: absolute;
+    top: 53px; left: 1px;
+    animation-delay: 11.7s;
+}
+.tecooling-animation-container .steam-2 {
+    position: absolute;
+    top: 53px; left: 134px;
+    animation-delay: 11.5s;
+}
+.tecooling-animation-container .steam-3 {
+    position: absolute;
+    top: 53px; left: 265px;
+    animation-delay: 11.3s;
+}
+.tecooling-animation-container .steam-4 {
+    position: absolute;
+    top: 53px; left: 397px;
+    animation-delay: 11.1s;
+}
+.tecooling-animation-container .steam-5 {
+    position: absolute;
+    top: 53px; left: 529px;
+    animation-delay: 10.9s;
+}
+.tecooling-animation-container .steam-6 {
+    position: absolute;
+    top: 53px; left: 661px;
+    animation-delay: 10.7s;
+}
+.tecooling-animation-container .steam-7 {
+    position: absolute;
+    top: 53px; left: 793px;
+    animation-delay: 10.5s;
+}
+.tecooling-animation-container .steam-8 {
+    position: absolute;
+    top: 194px; left: 1px;
+    animation-delay: 11.5s;
+}
+.tecooling-animation-container .steam-9 {
+    position: absolute;
+    top: 194px; left: 134px;
+    animation-delay: 11.3s;
+}
+.tecooling-animation-container .steam-10 {
+    position: absolute;
+    top: 194px; left: 265px;
+    animation-delay: 11.1s;
+}
+.tecooling-animation-container .steam-11 {
+    position: absolute;
+    top: 194px; left: 397px;
+    animation-delay: 10.9s;
+}
+.tecooling-animation-container .steam-12 {
+    position: absolute;
+    top: 194px; left: 529px;
+    animation-delay: 10.7s;
+}
+.tecooling-animation-container .steam-13 {
+    position: absolute;
+    top: 194px; left: 661px;
+    animation-delay: 10.5s;
+}
+.tecooling-animation-container .steam-14 {
+    position: absolute;
+    top: 194px; left: 793px;
+    animation-delay: 10.3s;
+}
+.tecooling-animation-container .steam-15 {
+    position: absolute;
+    top: 345px; left: 1px;
+    animation-delay: 11.3s;
+}
+.tecooling-animation-container .steam-16 {
+    position: absolute;
+    top: 345px; left: 134px;
+    animation-delay: 11.1s;
+}
+.tecooling-animation-container .steam-17 {
+    position: absolute;
+    top: 345px; left: 265px;
+    animation-delay: 10.9s;
+}
+.tecooling-animation-container .steam-18 {
+    position: absolute;
+    top: 345px; left: 397px;
+    animation-delay: 10.7s;
+}
+.tecooling-animation-container .steam-19 {
+    position: absolute;
+    top: 345px; left: 529px;
+    animation-delay: 10.5s;
+}
+.tecooling-animation-container .steam-20 {
+    position: absolute;
+    top: 345px; left: 661px;
+    animation-delay: 10.3s;
+}
+.tecooling-animation-container .steam-21 {
+    position: absolute;
+    top: 345px; left: 793px;
+    animation-delay: 10.1s;
+}

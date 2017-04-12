@@ -2,8 +2,8 @@
 
 'use strict';
 
-npBlogCtrl.$inject = ['$scope', '$window', 'api', 'modalDialog', 'assets', 'config'];
-function npBlogCtrl($scope, $window, api, modalDialog, assets, config) {
+npBlogCtrl.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npBlogCtrl($scope, api, modalDialog, assets, config) {
     this.manage = function () {
         $scope.blogs = assets.getAsset('blogs');
         $scope.server_url = config.server_url + 'uploads/thumbs/';
@@ -11,7 +11,7 @@ function npBlogCtrl($scope, $window, api, modalDialog, assets, config) {
         $scope.view = 'list';
 
         $scope.templates = {
-            "News Single": "news-single.php"
+            "Blog Single": "blog-single.php"
         };
 
         var params = {
@@ -23,10 +23,10 @@ function npBlogCtrl($scope, $window, api, modalDialog, assets, config) {
         var modal = modalDialog.showModal(params);
 
         $scope.validate = function (value) {
-            $scope.blog.name = value.replace(/ /g, '-').toLowerCase();
+            $scope.blog.name = encodeURI(value.replace(/ /g, '-').toLowerCase());
 
             if ($scope.blog.name.indexOf('news/') === -1) {
-                $scope.blog.name = 'news/' + value.replace(/ /g, '-').toLowerCase();
+                $scope.blog.name = 'news/' + $scope.blog.name;
             }
         };
 
@@ -48,6 +48,7 @@ function npBlogCtrl($scope, $window, api, modalDialog, assets, config) {
         $scope.addBlog = function () {
             $scope.view = 'add';
             $scope.edit = false;
+            $scope.blog.template = $scope.templates[0];
         };
 
         $scope.save = function (_blog) {
@@ -60,6 +61,7 @@ function npBlogCtrl($scope, $window, api, modalDialog, assets, config) {
             if (!$scope.edit) {
                 api('blogs').add(_blog).then(callback);
             } else {
+                delete _blog.created;
                 api('blogs').update(_blog).then(callback);
             }
 

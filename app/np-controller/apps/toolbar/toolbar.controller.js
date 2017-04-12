@@ -2,14 +2,15 @@
 
 'use strict';
 
-npEditorCtrl.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
-function npEditorCtrl($scope, api, modalDialog, assets, config) {
+npToolbarCtrl.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npToolbarCtrl($scope, api, modalDialog, assets, config) {
     var itemScope = $scope.$parent;
 
     this.modify = function (item) {
         $scope.edit = false;
         $scope.items = assets.getAsset('items');
         $scope.locales = assets.getAsset('locales');
+        $scope.galleries = assets.getAsset('galleries');
         $scope.server_url = config.server_url + 'uploads/';
 
         if (item) {
@@ -20,7 +21,7 @@ function npEditorCtrl($scope, api, modalDialog, assets, config) {
         var params = {
             scope: $scope,
             size: 'lg',
-            templateUrl: config.client_url + 'np-controller/templates/editor-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/toolbar-dialog.html'
         };
 
         var modal = modalDialog.showModal(params);
@@ -30,6 +31,12 @@ function npEditorCtrl($scope, api, modalDialog, assets, config) {
                 _item.image = _item.image.id;
             } else {
                 delete _item.image;
+            }
+
+            if (_item.gallery) {
+                _item.gallery = _item.gallery.id;
+            } else {
+                delete _item.gallery;
             }
 
             if ($scope.edit) {
@@ -81,7 +88,6 @@ function npEditorCtrl($scope, api, modalDialog, assets, config) {
     };
 
     this.delete = function (item) {
-        $scope.items = assets.getAsset('items');
         item = _.findWhere($scope.items, {id: item});
         item.active = 0;
         item = _.omit(item, 'page');
@@ -95,5 +101,5 @@ function npEditorCtrl($scope, api, modalDialog, assets, config) {
     };
 }
 
-angular.module('ninepixels.editor')
-        .controller('npEditorCtrl', npEditorCtrl);
+angular.module('ninepixels.toolbar')
+        .controller('npToolbarCtrl', npToolbarCtrl);

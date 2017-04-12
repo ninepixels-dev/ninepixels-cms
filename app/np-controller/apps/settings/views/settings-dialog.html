@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4>Podešavanja</h4>
+    <button type="button" class="btn pull-right" ng-click="settings._cancel()">X</button>
+</div>
+
+<div class="modal-body">
+    <div class="row" ng-repeat="option in options | orderBy: 'id' track by option.id">
+        <div class="col-md-3 form-label">{{option.name}}:</div>
+        <div class="col-md-9"><input type="text" class="form-control" ng-model="option.value" /></div>
+        <div class="col-md-12"><hr></div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-ninepixels" ng-click="settings._save(options)">Sačuvaj</button>
+</div>

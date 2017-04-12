@@ -12,7 +12,7 @@
     <ul class="modal-list">
         <li ng-repeat="user in users| filter:search track by user.id">
             {{user.username}}, {{user.email}}
-            <div class="modal-list-controls">
+            <div class="modal-list-controls" ng-if='user.username !== "nemanja.pavlovic"'>
                 <span ng-click="_delete(user)"><i class="fa fa-ban"></i></span>
             </div>
         </li>

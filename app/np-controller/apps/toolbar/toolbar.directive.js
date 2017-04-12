@@ -1,20 +1,32 @@
 'use strict';
 
-npToolbar.$inject = ['$cookies', '$window', 'assets', 'config'];
-function npToolbar($cookies, $window, assets, config) {
+npToolbar.$inject = ['config'];
+function npToolbar(config) {
     return {
-        templateUrl: config.client_url + 'np-controller/templates/toolbar.html',
-        link: function (scope) {
-            scope.user = $cookies.getObject('user');
+        scope: {
+            itemID: '=item',
+            pageID: '=page',
+            identifier: '@',
+            type: '@'
+        },
+        transclude: true,
+        templateUrl: config.client_url + 'np-controller/templates/np-toolbar.html',
+        link: function (scope, elem, attr, ctrl) {
+            var floatingPanel = elem.find('.floating-panel');
 
-            scope.components = assets.getAsset('components');
+            floatingPanel.appendTo(document.body);
 
-            scope.logout = function () {
-                $cookies.remove('token');
-                $cookies.remove('user');
-                $cookies.remove('page');
-                $window.location.reload();
-            };
+            elem.on('mouseover', function (e) {
+                floatingPanel.css({
+                    position: 'fixed',
+                    left: e.clientX,
+                    top: e.clientY
+                }).addClass('active');
+            });
+
+            elem.on('mouseleave', function () {
+                floatingPanel.removeClass('active');
+            });
         }
     };
 }

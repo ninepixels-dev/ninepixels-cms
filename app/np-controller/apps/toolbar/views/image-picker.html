@@ -4,11 +4,18 @@
 </div>
 
 <div class="modal-body">
+    <div class="row">
+        <div class="form-group">
+            <label for="searchPage">Pretraga</label>
+            <input type="text" class="form-control" id="searchPage" ng-model="search.name" ng-trim="false">
+        </div>
+    </div>
+
     <div class="ninepixels_gallery-holder ninepixels_remove-image" ng-if="!galleryItems" ng-click="choose('')">
         <i class="fa fa-ban"></i>Poništi izabrano
     </div>
 
-    <div class="ninepixels_gallery-album" ng-if="!galleryItems" ng-repeat="gallery in galleries" ng-click="pickGallery(gallery)">
+    <div class="ninepixels_gallery-album" ng-if="!galleryItems" ng-repeat="gallery in galleries| filter:search | orderBy: 'name' track by gallery.id" ng-click="pickGallery(gallery)">
         <img ng-repeat="pGallery in filteredGallery[gallery.id]| limitTo:4" src="{{server_url + pGallery.url}}">
         <label>{{ gallery.name}}</label>
     </div>

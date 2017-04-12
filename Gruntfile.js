@@ -33,16 +33,17 @@ module.exports = function (grunt) {
         controller: [
             'app/np-controller/config.js',
 
+            'app/np-controller/apps/controller/controller.directive.js',
+            'app/np-controller/apps/controller/user.controller.js',
+            'app/np-controller/apps/controller/asset.service.js',
+            'app/np-controller/apps/controller/asset.controller.js',
+            'app/np-controller/apps/pages/page.controller.js',
             'app/np-controller/apps/toolbar/toolbar.directive.js',
-            'app/np-controller/apps/toolbar/user.controller.js',
-            'app/np-controller/apps/toolbar/page.controller.js',
-            'app/np-controller/apps/toolbar/asset.service.js',
-            'app/np-controller/apps/toolbar/asset.controller.js',
-            'app/np-controller/apps/editor/editor.directive.js',
-            'app/np-controller/apps/editor/editor.controller.js',
-            'app/np-controller/apps/editor/pickimage.directive.js',
+            'app/np-controller/apps/toolbar/toolbar.controller.js',
+            'app/np-controller/apps/toolbar/pickimage.directive.js',
             'app/np-controller/apps/blog/blog.controller.js',
             'app/np-controller/apps/products/products.controller.js',
+            'app/np-controller/apps/settings/settings.controller.js',
 
             'app/np-controller/core/auth/auth.js',
             'app/np-controller/core/api/api.js',
@@ -67,8 +68,7 @@ module.exports = function (grunt) {
             'node_modules/owl.carousel/dist/owl.carousel.min.js',
             'node_modules/fancybox/dist/js/jquery.fancybox.js',
 
-            'app/np-assets/scripts/google-map.js',
-            'app/np-assets/scripts/main.js'
+            'app/np-assets/scripts/**/*.js'
         ],
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
@@ -293,7 +293,7 @@ module.exports = function (grunt) {
             prod: {
                 options: {
                     authKey: "server",
-                    host: "hotelcitysavoy.com",
+                    host: "te-cooling.rs",
                     dest: "/",
                     port: 21,
                     incrementalUpdates: false

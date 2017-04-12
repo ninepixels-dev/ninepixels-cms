@@ -1,0 +1,64 @@
+<div class="modal-header">
+    <h4>{{!edit ? 'Dodaj artikal' : 'Izmeni artikal'}}</h4>
+    <button type="button" class="btn pull-right" ng-click="cancel()">X</button>
+</div>
+
+<div class="modal-body">
+    <div class="form-group medium-editor">
+        <div np-html-editor ng-model="item.structure"></div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-10">
+            <label for="item-classes">Dodatne klase</label>
+            <input type="text" class="form-control" ng-model="item.classes" id="item-classes">
+        </div>
+        <div class="col-md-2">
+            <label for="item-classes">Pozicija</label>
+            <input type="number" class="form-control" ng-model="item.position" id="item-classes">
+        </div>
+    </div>
+
+    <uib-tabset type="tabs nested-tabs">
+        <uib-tab index="0" heading="Slika">
+            <div class="form-group">
+                <label for="item-image">Slika</label>
+                <div np-pick-image id="item-image" class="pick-image" ng-model="item.image" ng-click="openModal()">
+                    <img ng-if="item.image" src="{{server_url + item.image.url}}" />
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Link">
+            <div class="form-group">
+                <label for="item-classes">Link</label>
+                <input type="text" class="form-control" ng-model="item.link" id="item-classes">
+            </div>
+        </uib-tab>
+        <uib-tab index="2" heading="Video">
+            <div class="form-group">
+                <label for="item-classes">Video</label>
+                <input type="text" class="form-control" ng-model="item.video" id="item-classes">
+            </div>
+        </uib-tab>
+        <uib-tab index="3" heading="Galerija">
+            <div class="form-group">
+                <label for="item-classes">Galerija</label>
+                <div class="dropdown">
+                    <button class="btn btn-default btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+                        {{item.gallery.name|| 'Please select'}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="gallery in galleries| orderBy: 'name' track by gallery.id">
+                            <a ng-click="item.gallery = gallery">{{gallery.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-ninepixels" ng-click="save(item)">Sačuvaj</button>
+</div>

@@ -1,0 +1,206 @@
+.content-teaser {
+    position: relative;
+    text-align: center;
+    background-color: black;
+
+    overflow: hidden;
+
+    .teaser-image {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        opacity: .4;
+        margin-top: -210px;
+        z-index: -1;
+    }
+
+    .col-md-12 {
+        position: relative;
+        z-index: 1;
+        padding-top: 210px;
+        padding-bottom: 105px;
+        background-size: cover;
+        background-attachment: fixed;
+
+        > p {
+            max-width: 895px;
+            margin: 0 auto;
+        }
+
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    }
+
+    h2 {
+        font-size: 93px;
+        line-height: 105px;
+        font-weight: 500;
+        color: #ffffff;
+        text-transform: uppercase;
+        position: relative;
+    }
+
+    h3 {
+        position: relative;
+        font-size: 25px;
+        line-height: 50px;
+        font-weight: 300;
+        color: #ffffff;
+        margin-bottom: 130px;
+        text-transform: uppercase;
+
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+
+            width: 54px;
+            height: 5px;
+            left: 50%;
+            margin-left: -27px;
+            border-radius: 25px;
+            background-color: #f7b130;
+        }
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 28px;
+        color: #ffffff;
+        position: relative;
+    }
+}
+
+.content-gallery{
+    clear: both;
+    padding-top: 25px;
+    padding-bottom: 55px;
+}
+
+.content-gallery .row{
+    -moz-column-width: 27em;
+    -webkit-column-width: 27em;
+    -moz-column-gap: 1em;
+    -webkit-column-gap:1em;
+}
+
+.content-gallery .row > div{
+    margin-bottom: 3.3em;
+}
+
+.content-gallery .row div.col-md-4 {
+    float: none;
+    display: inline-block;
+    vertical-align: top;
+    width: 95%;
+}
+
+.content-gallery .row div.col-md-4 img {
+    width: 100%;
+}
+
+.main-content, {
+    padding: 55px 0;
+
+    .content-left-bar {
+        p {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 28px;
+            color: #5d5d5d;
+        }
+        blockquote {
+            text-align: center;
+            padding: 0; border: 0; margin: 0;
+            margin-bottom: 28px;
+
+            p, div {
+                font-size: 43px;
+                font-weight: 300;
+                line-height: 50px;
+            }
+
+            a {
+                color: #e5a949;
+                &:hover {
+                    color: #5d5d5d;
+                }
+            }
+        }
+
+    }
+
+    .content-right-bar {
+        padding: 45px 55px;
+        background-color: #f2f2f2;
+
+        .heading {
+            font-size: 15px;
+            line-height: 23px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            margin-top: 40px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #cecece;
+
+            &:first-of-type{
+                margin-top: 0;
+            }
+        }
+
+        b { display: block; }
+
+        p { margin-bottom: 15px; }
+
+        h4 {
+            margin-bottom: 5px;
+            a {
+                color: #333;
+                -webkit-transition: all 0.5s;
+                transition: all 0.5s;
+                &:hover {
+                    color: #2db8b5;
+                }
+            }
+        }
+
+        h5 { 
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.content-packages{
+    padding-bottom: 40px;
+    border-bottom: 1px solid #999;
+    margin: 20px 0;
+
+    h6{
+        color: #c23d3d;
+    }
+
+    .col-md-6 { margin-bottom: 30px; }
+}
+
+.mobilni-360-sistemi-page .content-packages{
+    text-align: center;
+}
+
+.fancybox-overlay {
+    background-color: rgba(0,0,0,0.5);
+    
+    .fancybox-skin {
+        padding: 2px !important;
+    }
+}
