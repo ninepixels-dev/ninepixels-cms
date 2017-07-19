@@ -1,3 +1,5 @@
+/* global MediumEditor */
+
 'use strict';
 
 htmlEditor.$inject = [];
@@ -9,20 +11,28 @@ function htmlEditor() {
                 return;
 
             var editor = new MediumEditor(element, {
-                buttonLabels: 'fontawesome',
+                autoLink: true,
+                targetBlank: true,
+                placeholder: false,
                 toolbar: {
                     relativeContainer: element.parent()[0],
-                    buttons: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'quote', 'unorderedlist', 'table', 'bold', 'italic', 'underline', 'anchor', 'removeFormat'],
-                    static: true
+                    buttons: ['h1', 'h2', 'h3', 'h4', 'quote', 'unorderedlist', 'table', 'bold', 'italic', 'underline', 'anchor', 'removeFormat'],
+                    static: true,
+                    updateOnEmptySelection: true
                 },
-                placeholder: false,
                 extensions: {
                     table: new MediumEditorTable()
                 },
                 anchor: {
                     placeholderText: 'Type a link',
+                    linkValidation: true,
                     customClassOption: 'btn',
-                    customClassOptionText: 'Create Button'
+                    customClassOptionText: 'Create Button',
+                    targetCheckbox: true,
+                    targetCheckboxText: 'Open in new window'
+                },
+                paste: {
+                    cleanPastedHTML: true
                 }
             });
 
@@ -41,5 +51,5 @@ function htmlEditor() {
     };
 }
 
-angular.module('ninepixels.ui.htmlEditor', [])
+angular.module('ninepixels.ui', [])
         .directive('npHtmlEditor', htmlEditor);

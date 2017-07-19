@@ -1,10 +1,12 @@
+/* global _ */
+
 'use strict';
 
 login.$inject = ['config'];
 function login(config) {
     return {
         controller: loginRegisterCtrl,
-        templateUrl: config.client_url + 'np-controller/templates/login.html'
+        templateUrl: './np-controller/templates/login.html'
     };
 }
 
@@ -35,8 +37,8 @@ function loginRegisterCtrl($scope, $cookies, $window, api, authentification) {
                 if (!user.username)
                     return $scope.errorMsg = 'User is not activated!';
 
+                user.admin = !_.isEmpty(user.roles);
                 $cookies.putObject('user', user);
-
                 $window.location.pathname = '';
             });
         });

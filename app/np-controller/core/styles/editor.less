@@ -1,0 +1,44 @@
+@import 'variables';
+
+.np-modal, .np-toolbar-container {
+    .medium-editor {
+        width: calc(~'100% - 30px');;
+        position: relative;
+        border-radius: 0;
+        border: 1px solid #e6e6e6 !important;
+        box-shadow: none !important;
+        outline: none !important;
+        height: 400px;
+        margin: 0 15px 15px 15px;
+
+        *:focus { outline: none !important; }
+    }
+
+    .medium-editor-element {
+        margin-top: 40px;
+        padding: 6px 12px;
+        height: calc(~'100% - 40px');
+        overflow: auto;
+    }
+
+    .medium-editor-toolbar {
+        width: 100%;
+        visibility: visible;
+        background-color: @black;
+        li button {
+            height: 40px;
+            min-width: 40px;
+            line-height: 11px;
+            border-color: @np-orange;
+            &.medium-editor-button-active {
+                background-color: @np-orange;
+            }
+            &:hover, &:active {
+                background-color: @np-orange;
+            }
+            &:last-of-type {
+                border-right: 1px;
+            }
+        }
+    }
+}

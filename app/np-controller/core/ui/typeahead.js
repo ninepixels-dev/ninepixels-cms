@@ -12,7 +12,7 @@ function typeaheadDirective($timeout, config) {
             isDisabled: '=disabled',
             isRequired: '=required'
         },
-        templateUrl: config.client_url + 'np-controller/templates/typeahead.html',
+        templateUrl: './np-controller/templates/typeahead.html',
         link: function (scope, elem, attr, ctrl) {
             var field = scope.field ? scope.field.split(', ') : false;
 
@@ -66,5 +66,5 @@ function typeaheadDirective($timeout, config) {
     };
 }
 
-angular.module('ninepixels.ui.typeahead', [])
+angular.module('ninepixels.ui')
         .directive('npTypeahead', typeaheadDirective);

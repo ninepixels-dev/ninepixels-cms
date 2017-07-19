@@ -1,0 +1,25 @@
+@import 'variables';
+@import 'mixins';
+
+section#quotes {
+    text-align: center;
+    background-color: @darker;
+
+    .wrapper { padding: 40px 0; }
+
+    q, blockquote {
+        font-size: 40px;
+        font-weight: 400;
+        color: white;
+        line-height: 50px;
+        text-transform: none;
+        border: 0;
+        padding: 0; margin: 0;
+    }
+
+    p {
+        font-size: 25px;
+        font-weight: 300;
+        color: white;
+    }
+}

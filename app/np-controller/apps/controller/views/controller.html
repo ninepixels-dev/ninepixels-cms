@@ -1,33 +1,48 @@
-<div class="holding-container"></div>
+<div class="np-holding-container"></div>
 
-<div class="toolbar-container">
+<div class="np-toolbar-container toolbar-container">
     <div class="user-info pull-left">
         <div class="user">{{user.username}}</div>
     </div>
 
-    <div class="btn-group" ng-controller="npPageController as page">
+    <div class="btn-group" ng-controller="npPageCtrl as page">
         <button class="btn btn-toolbar" ng-click="page.manage()">
             <i class="toolbar-icon icon-control-page"></i>Stranice
         </button>
     </div>
 
-    <div class="btn-group" ng-controller="npUsersController as user">
-        <button class="btn btn-toolbar" ng-click="user.manage()">
-            <i class="toolbar-icon icon-control-users"></i>Korisnici
+    <div class="btn-group" ng-controller="npBlogCtrl as blog" ng-if="config.application.type === 'blog'">
+        <button class="btn btn-toolbar" ng-click="blog.manage()">
+            <i class="toolbar-icon icon-control-blog"></i>Blog
         </button>
     </div>
 
-    <div class="dropdown-toolbar dropdown" ng-controller="npAssetsCtrl as assets">
-        <button class="btn btn-toolbar dropdown-toggle" type="button" data-toggle="dropdown">
-            <i class="toolbar-icon icon-content"></i>Sadržaj <span class="caret"></span>
+    <div class="btn-group" ng-controller="npProductsCtrl as product" ng-if="config.application.type === 'product'">
+        <button class="btn btn-toolbar" ng-click="product.manage()">
+            <i class="toolbar-icon icon-control-products"></i>Proizvodi
+        </button>
+    </div>
+
+    <div class="dropdown-toolbar dropdown">
+        <button class="btn btn-toolbar" type="button" data-toggle="dropdown">
+            <i class="toolbar-icon icon-control-content"></i>Sadržaj <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li><a href="#" ng-click="assets.galleries()">Galerija</a></li>
-            <li><a href="#" ng-controller="npBlogCtrl as blog" ng-click="blog.manage()">Blog</a></li>
-            <li><a href="#" ng-controller="npProductsCtrl as product" ng-click="product.manage()">Proizvodi</a></li>
-            <li><a href="#" ng-click="assets.components()">Komponente</a></li>
-            <li><a href="#" ng-click="assets.locales()">Lokalizacija</a></li>
-            <li><a href="#" ng-controller="npSettingsCtrl as settings" ng-click="settings.manage()">Podešavanja</a></li>
+            <li><a href="#" ng-controller="npGalleryCtrl as gallery" ng-click="gallery.manage()">Galerije</a></li>
+            <li ng-if="checkForApp('language')"><a href="#" ng-controller="npLanguageCtrl as language" ng-if="user.admin" ng-click="language.manage()">Lokalizacija</a></li>
+            <li ng-if="checkForApp('blog')"><a href="#" ng-controller="npBlogCtrl as blog" ng-click="blog.manage()">Blog</a></li>
+            <li ng-if="checkForApp('product')"><a href="#" ng-controller="npProductsCtrl as product" ng-click="product.manage()">Proizvodi</a></li>
+        </ul>
+    </div>
+
+    <div class="dropdown-toolbar dropdown">
+        <button class="btn btn-toolbar" type="button" data-toggle="dropdown">
+            <i class="toolbar-icon icon-control-settings"></i>Podešavanja <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="#" ng-controller="npUsersCtrl as user" ng-if="user.admin" ng-click="user.manage()">Korisnici</a></li>
+            <li><a href="#" ng-controller="npComponentCtrl as component" ng-click="component.manage()">Komponente</a></li>
+            <li><a href="#" ng-controller="npSettingsCtrl as settings" ng-click="settings.manage()">Osnovna podešavanja</a></li>
         </ul>
     </div>
 
@@ -36,7 +51,7 @@
             Osveži stranu
         </button>
         <button class="btn btn-toolbar" ng-click="logout()">
-            <i class="toolbar-icon icon-log-out"></i>Odjavljivanje
+            <i class="toolbar-icon icon-control-log-out"></i>Odjavljivanje
         </button>
     </div>
 </div>

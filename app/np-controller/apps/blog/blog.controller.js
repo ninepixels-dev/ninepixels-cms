@@ -6,85 +6,83 @@ npBlogCtrl.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
 function npBlogCtrl($scope, api, modalDialog, assets, config) {
     this.manage = function () {
         $scope.blogs = assets.getAsset('blogs');
-        $scope.server_url = config.server_url + 'uploads/thumbs/';
-        $scope.edit = false;
+        $scope.templates = config.templates.blog;
+        $scope.server_url = config.server_url + config.images.thumbs;
+
         $scope.view = 'list';
 
-        $scope.templates = {
-            "Blog Single": "blog-single.php"
-        };
-
-        var params = {
+        return $scope.modal = modalDialog.showModal({
             scope: $scope,
+            controller: 'npBlogCtrl',
+            controllerAs: 'ctrl',
             size: 'lg',
-            templateUrl: config.client_url + 'np-controller/templates/blog-dialog.html'
-        };
+            templateUrl: './np-controller/templates/blog-dialog.html'
+        });
 
-        var modal = modalDialog.showModal(params);
-
-        $scope.validate = function (value) {
-            $scope.blog.name = encodeURI(value.replace(/ /g, '-').toLowerCase());
-
-            if ($scope.blog.name.indexOf('news/') === -1) {
-                $scope.blog.name = 'news/' + $scope.blog.name;
-            }
-        };
-
-        $scope._update = function (_blog) {
-            $scope.blog = _blog;
-            $scope.view = 'add';
-            $scope.edit = true;
-        };
-
-        $scope._delete = function (_blog) {
-            _blog.active = 0;
-            api('blogs').update(_blog).then(function (res) {
-                if (res.status === 200) {
-                    $scope.blogs = assets.removeAsset('blogs', _blog);
-                }
-            });
-        };
-
-        $scope.addBlog = function () {
-            $scope.view = 'add';
-            $scope.edit = false;
-            $scope.blog.template = $scope.templates[0];
-        };
-
-        $scope.save = function (_blog) {
-            if (_blog.image) {
-                _blog.image = _blog.image.id;
-            } else {
-                delete _blog.image;
-            }
-
-            if (!$scope.edit) {
-                api('blogs').add(_blog).then(callback);
-            } else {
-                delete _blog.created;
-                api('blogs').update(_blog).then(callback);
-            }
-
-            function callback(res) {
-                if (res.status === 201) {
-                    $scope.blogs = assets.setAsset('blogs', res.item);
-                } else if (res.status === 200) {
-                    $scope.blogs = assets.updateAsset('blogs', res.item);
-                }
-                $scope.view = 'list';
-                $scope.blog = {};
-            }
-        };
-
-        $scope.cancel = function () {
-            if ($scope.view === 'list') {
-                modal.close();
-            } else {
-                $scope.view = 'list';
-                $scope.blog = {};
-            }
-        };
     };
+
+    this.add = function () {
+        return $scope.view = 'form';
+    };
+
+    this.update = function (_blog) {
+        $scope.view = 'form';
+        return $scope.blog = _blog;
+    };
+
+    this.validate = function (value) {
+        $scope.blog.name = encodeURI(value
+                .replace(/č|ć/gi, 'c')
+                .replace(/ž/gi, 'z')
+                .replace(/š/gi, 's')
+                .replace(/đ/gi, 'dj')
+                .replace(/ +/g, '-').toLowerCase());
+
+        if ($scope.blog.name.indexOf(config.application.blog_prefix + '/') === -1) {
+            $scope.blog.name = config.application.blog_prefix + '/' + $scope.blog.name;
+        }
+    };
+
+    this.date = function (date) {
+        return moment(date).format('DD. MMMM YYYY, HH:mm');
+    };
+
+    this.save = function (_blog) {
+        return _blog.id ?
+                api('blogs').update(_blog).then(callback) :
+                api('blogs').add(_blog).then(callback);
+    };
+
+    this.delete = function (_blog) {
+        return modalDialog.showConfirmation().then(function () {
+            api('blogs').delete(_blog).then(function () {
+                return $scope.pages = assets.removeAsset('blogs', _blog);
+            });
+        });
+    };
+
+    this.cancel = function () {
+        if ($scope.view === 'list') {
+            return $scope.modal.close();
+        }
+
+        $scope.view = 'list';
+        delete $scope.blog;
+    };
+
+    // Callback function
+    function callback(res) {
+        if (res.status === 201) {
+            $scope.blogs = assets.setAsset('blogs', res.item);
+        }
+        if (res.status === 200) {
+            $scope.blogs = assets.updateAsset('blogs', res.item);
+        }
+
+        delete $scope.blog;
+        return $scope.view = 'list';
+    }
+
 }
 
 angular.module('ninepixels.blog', [])

@@ -1,0 +1,60 @@
+@import 'variables';
+@import 'mixins';
+
+/* ABOUT US PAGE */
+section#about-us {
+    background-repeat: no-repeat;
+    background-image: url(../images/about-us-bg.jpg);
+    background-position: center center;
+    background-attachment: fixed;
+    .wrapper {
+        padding: 170px 0 120px 0;
+        text-align: center;
+    }
+    .two-columns {
+        margin-top: 145px;
+    }
+    h1, h1 + span {
+        display: inline-block;
+        font-size: 70px;
+        font-weight: 700;
+        line-height: 70px;
+        margin: 0;
+        padding: 0 7px;
+        color: white;
+        text-align: center;
+        margin-bottom: 15px;
+        background-color: @orange;
+    }
+    h1 + span { 
+        background-color: transparent;
+        color: black;
+    }
+    .heading-2 {
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 55px;
+        color: @dark;
+
+        margin-top: 29px;
+        text-transform: none;
+        > b {
+            font-size: 50px;
+            font-weight: 700;
+            line-height: 55px;
+            color: @dark;
+
+            text-transform: uppercase;
+        }
+    }
+    .heading-3 {
+        font-size: 50px;
+        font-weight: 300;
+        line-height: 105px;
+        color: @dark;
+
+        text-align: center;
+        letter-spacing: 15px;
+        text-transform: uppercase;
+    }
+}

@@ -12,11 +12,16 @@
         <li ng-repeat="product in products| filter:search track by product.id">
             {{product.title}}
             <div class="modal-list-controls">
-                <span ng-click="_update(product)"><i class="fa fa-pencil"></i></span>
-                <span ng-click="_delete(product)"><i class="fa fa-trash-o"></i></span>
+                <span ng-click="_update(product)"><i class="glyphicon glyphicon-pencil"></i></span>
+                <span ng-click="_delete(product)"><i class="glyphicon glyphicon-trash"></i></span>
             </div>
         </li>
     </ul>
+    
+    <div class="np-modal-empty" ng-if="!products.length">
+        Trenutno nemate proizvoda
+        <a href="" ng-click="addProduct()">Dodaj prvi</a>
+    </div>
 </div>
 
 <div class="modal-body" ng-show="view === 'add'">
@@ -51,8 +56,8 @@
 
     <div class="form-group">
         <label for="item-image">Slika</label>
-        <div np-pick-image id="item-image" class="pick-image" ng-model="product.image" ng-click="openModal()">
-            <img ng-if="product.image" src="{{server_url + product.image.url}}" />
+        <div np-image-picker id="item-image" class="pick-image" ng-model="product.image" ng-click="openModal()">
+            <img ng-if="product.image" ng-src="{{server_url + product.image.url}}" />
         </div>
     </div>
 </div>

@@ -2,8 +2,8 @@
 
 'use strict';
 
-apiService.$inject = ['$q', '$http', '$cookies', '$location', '$window', 'notify', 'token'];
-function apiService($q, $http, $cookies, $location, $window, notify, token) {
+apiService.$inject = ['$q', '$http', '$cookies', '$window', 'notify', 'token'];
+function apiService($q, $http, $cookies, $window, notify, token) {
 
     /**
      * Call $http once url is resolved
@@ -51,11 +51,12 @@ function apiService($q, $http, $cookies, $location, $window, notify, token) {
 
     var api = function (route) {
         return {
-            fetch: function () {
+            fetch: function (item, params) {
                 return http({
-                    url: token.resolveUrl(route),
+                    url: token.resolveUrl(route, item),
                     method: 'GET',
-                    headers: token.getToken()
+                    headers: token.getToken(),
+                    params: params
                 }).then(function (response) {
                     return response;
                 }, function (response) {
@@ -104,16 +105,6 @@ function apiService($q, $http, $cookies, $location, $window, notify, token) {
                     })
                 }).then(function (response) {
                     $cookies.putObject('token', response);
-                }, errorCallback);
-            },
-            register: function (params) {
-                return http({
-                    url: token.resolveUrl('register'),
-                    method: 'POST',
-                    headers: token.getToken(),
-                    data: params
-                }).then(function (response) {
-                    return response;
                 }, errorCallback);
             },
             download: function (params) {

@@ -3,12 +3,19 @@
 npController.$inject = ['$cookies', '$window', 'assets', 'config'];
 function npController($cookies, $window, assets, config) {
     return {
-        templateUrl: config.client_url + 'np-controller/templates/controller.html',
+        templateUrl: './np-controller/templates/controller.html',
         link: function (scope) {
             scope.user = $cookies.getObject('user');
+            scope.config = config;
 
             scope.components = assets.getAsset('components');
 
+            scope.checkForApp = function (app) {
+                return _.find(scope.config.application.apps, function (val) {
+                    return val === app;
+                });
+            };
+            
             scope.logout = function () {
                 $cookies.remove('token');
                 $cookies.remove('user');
@@ -17,11 +24,11 @@ function npController($cookies, $window, assets, config) {
             };
 
             scope.reload = function () {
-                $('#editor-iframe')[0].contentWindow.location.reload();
+                $('#np-editor-iframe')[0].contentWindow.location.reload();
             };
         }
     };
 }
 
-angular.module('ninepixels.controller', [])
+angular.module('ninepixels.controller', ['angular.filter'])
         .directive('npController', npController);

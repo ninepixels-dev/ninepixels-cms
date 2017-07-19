@@ -1,70 +1,80 @@
 <div class="modal-header">
     <h4>Upravljaj blogovima</h4>
-    <button type="button" class="btn pull-right" ng-click="cancel()">X</button>
+    <button type="button" class="btn pull-right" ng-click="ctrl.cancel()">X</button>
 </div>
 
-<div class="modal-body" ng-show="view === 'list'">
-    <div class="form-group">
-        <label for="searchPage">Pretraga</label>
-        <input type="text" class="form-control" id="searchPage" ng-model="search.title" ng-trim="false">
+<div class="modal-body" ng-show="view === 'list' && blogs.length">
+    <label>Pretraga</label>
+    <div class="row">
+        <div class="col-md-9 form-group">
+            <input type="text" class="form-control" ng-model="search.title" ng-trim="false">
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-ninepixels" ng-click="ctrl.add()">Dodaj blog</button>
+        </div>
     </div>
-    <ul class="modal-list">
+
+    <ul class="np-modal-list">
         <li ng-repeat="blog in blogs| filter:search track by blog.id">
-            {{blog.title}}
-            <div class="modal-list-controls">
-                <span ng-click="_update(blog)"><i class="fa fa-pencil"></i></span>
-                <span ng-click="_delete(blog)"><i class="fa fa-trash-o"></i></span>
+            <div class="np-modal-list-name">{{blog.title}}</div>
+            <div class="np-modal-list-controls">
+                <span>{{ctrl.date(blog.created)}}</span>
+                <span ng-click="ctrl.update(blog)"><i class="glyphicon glyphicon-pencil"></i></span>
+                <span ng-click="ctrl.delete(blog)"><i class="glyphicon glyphicon-trash"></i></span>
             </div>
         </li>
     </ul>
 </div>
 
-<div class="modal-body" ng-show="view === 'add'">
-    <div class="form-group">
-        <label for="item-title">Naslov</label>
-        <input type="text" class="form-control" ng-model="blog.title" ng-change="validate(blog.title)" id="item-title">
+<div class="modal-body" ng-if="!blogs.length && view !== 'form'">
+    <div class="np-modal-empty">
+        Trenutno nemate blogova
+        <a href="" ng-click="ctrl.add()">Dodaj prvi</a>
     </div>
+</div>
 
-    <div class="form-group medium-editor">
-        <div np-html-editor ng-model="blog.content"></div>
-    </div>
-
-    <div class="form-group">
-        <label for="item-tags">Tagovi</label>
-        <input type="text" class="form-control" ng-model="blog.tags" id="item-tags">
-    </div>
-
-    <div class="form-group">
-        <label for="pageTemplate">Template</label>
-        <div class="dropdown">
-            <button class="btn btn-default btn-block dropdown-toggle" type="button" data-toggle="dropdown">
-                {{blog.template|| 'Please select'}}
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li ng-repeat="(key, val) in templates">
-                    <a ng-click="blog.template = val">{{key}}</a>
-                </li>
-            </ul>
+<div class="modal-body" ng-show="view === 'form'">
+    <div class="row">
+        <div class="col-md-8 form-group">
+            <label>Naslov</label>
+            <input type="text" class="form-control" ng-model="blog.title" ng-change="ctrl.validate(blog.title)" ng-trim="false">
+        </div>
+        <div class="col-md-4 form-group">
+            <label>Template</label>
+            <div class="dropdown">
+                <button class="btn btn-default btn-block dropdown-toggle" type="button" data-toggle="dropdown">{{blog.template}}</button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="(key, val) in templates">
+                        <a ng-click="blog.template = val">{{key}}</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="item-title">Navigacija</label>
-        <input type="text" class="form-control" ng-model="blog.name" ng-change="validate(blog.name)" id="item-title" ng-trim="false">
+    <div class="row">
+        <div class="col-md-12 form-group medium-editor">
+            <div np-html-editor ng-model="blog.content"></div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="item-image">Slika</label>
-        <div np-pick-image id="item-image" class="pick-image" ng-model="blog.image" ng-click="openModal()">
-            <img ng-if="blog.image" src="{{server_url + blog.image.url}}" />
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Tagovi</label>
+            <input type="text" class="form-control" ng-model="blog.tags">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Slika</label>
+            <div np-image-picker class="pick-image" ng-model="blog.image" ng-click="manage()" ng-class="{'empty' : !blog.image}">
+                <img ng-if="blog.image" ng-src="{{server_url + blog.image.url}}" />
+            </div>
         </div>
     </div>
 </div>
-<div class="modal-footer" ng-show="view === 'list'">
-    <button type="button" class="btn btn-ninepixels" ng-click="addBlog()">Dodaj blog</button>
-</div>
 
-<div class="modal-footer" ng-show="view === 'add'">
-    <button type="button" class="btn btn-ninepixels" ng-click="save(blog)">Sačuvaj</button>
+<div class="modal-footer" ng-show="view === 'form'">
+    <button type="button" class="btn btn-ninepixels" ng-click="ctrl.save(blog)">Sačuvaj</button>
 </div>

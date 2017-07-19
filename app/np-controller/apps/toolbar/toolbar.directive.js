@@ -1,18 +1,19 @@
 'use strict';
 
-npToolbar.$inject = ['config'];
-function npToolbar(config) {
+npToolbar.$inject = [];
+function npToolbar() {
     return {
         scope: {
-            itemID: '=item',
-            pageID: '=page',
-            identifier: '@',
-            type: '@'
+            item: '=item',
+            page: '=page',
+            ident: '@identifier'
         },
         transclude: true,
-        templateUrl: config.client_url + 'np-controller/templates/np-toolbar.html',
+        controller: 'npToolbarCtrl',
+        controllerAs: 'ctrl',
+        templateUrl: './np-controller/templates/np-toolbar.html',
         link: function (scope, elem, attr, ctrl) {
-            var floatingPanel = elem.find('.floating-panel');
+            var floatingPanel = elem.find('.np-floating-panel');
 
             floatingPanel.appendTo(document.body);
 
@@ -21,11 +22,21 @@ function npToolbar(config) {
                     position: 'fixed',
                     left: e.clientX,
                     top: e.clientY
-                }).addClass('active');
+                }).show();
+                elem.addClass('np-toolbar-active');
+            });
+
+            floatingPanel.on('mouseover', function () {
+                elem.addClass('np-toolbar-active');
+            });
+
+            floatingPanel.on('mouseleave', function () {
+                elem.removeClass('np-toolbar-active');
             });
 
             elem.on('mouseleave', function () {
-                floatingPanel.removeClass('active');
+                floatingPanel.hide();
+                elem.removeClass('np-toolbar-active');
             });
         }
     };
