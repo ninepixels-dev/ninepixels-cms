@@ -23,7 +23,14 @@ if (parseURL() === 'np-admin') {
 }
 
 // Load assets
-$assets = json_decode(file_get_contents($GLOBALS['SERVER_URL'] . 'assets'));
+$assets_url = file_get_contents($GLOBALS['SERVER_URL'] . 'assets');
+
+// If server is not accesible, through error
+if ($assets_url === FALSE) {
+    die('Nine Pixels CMS can\'t connect to core. Please check with server administrator.');
+}
+
+$assets = json_decode($assets_url);
 
 // Merge all page-type data
 $pages = array_merge($assets->pages, $assets->blogs);
