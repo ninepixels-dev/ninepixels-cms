@@ -52,7 +52,6 @@
     </div>
 </div>
 
-<div class="modal-footer">
-    <button type="button" class="btn btn-ninepixels" ng-click="ctrl.save(_component)" ng-if="view === 'form'">Sačuvaj</button>
-    <button type="button" class="btn btn-ninepixels" ng-click="ctrl.cancel()">Zatvori</button>
+<div class="modal-footer" ng-if="view === 'form'">
+    <button type="button" class="btn btn-ninepixels" ng-click="ctrl.save(_component)">Sačuvaj</button>
 </div>

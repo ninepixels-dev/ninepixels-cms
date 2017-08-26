@@ -12,7 +12,7 @@ function typeaheadDirective($timeout, config) {
             isDisabled: '=disabled',
             isRequired: '=required'
         },
-        templateUrl: './np-controller/templates/typeahead.html',
+        templateUrl: config.client_url + 'np-controller/templates/typeahead.html',
         link: function (scope, elem, attr, ctrl) {
             var field = scope.field ? scope.field.split(', ') : false;
 

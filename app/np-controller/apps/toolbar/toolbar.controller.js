@@ -6,9 +6,10 @@ npToolbarCtrl.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config', 'or
 function npToolbarCtrl($scope, api, modalDialog, assets, config, orderBy) {
     var self = this;
 
+    $scope.languages = assets.getAsset('languages') || [];
+
     this.modify = function () {
         $scope.galleries = assets.getAsset('galleries') || [];
-        $scope.languages = assets.getAsset('languages') || [];
         $scope.components = assets.getAsset('components') || [];
         $scope.server_url = config.server_url + config.images.thumbs;
 
@@ -17,25 +18,28 @@ function npToolbarCtrl($scope, api, modalDialog, assets, config, orderBy) {
             controller: npToolbarCtrl,
             controllerAs: 'ctrl',
             size: 'lg',
-            templateUrl: './np-controller/templates/toolbar-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/toolbar-dialog.html'
         });
     };
 
-    this.add = function (page, ident) {
+    this.add = function (page, ident, lang) {
         $scope._item = {
             page: page,
             identifier: ident
         };
 
+        if (lang) {
+            $scope._item.language = _.findWhere($scope.languages, {code: lang});
+        }
+
         return self.modify();
     };
 
     this.update = function (_item) {
-        return _item ? api('items').fetch({id: _item}).then(function (res) {
+        return api('items').fetch({id: _item}).then(function (res) {
             $scope._item = res;
             return self.modify();
-
-        }) : false;
+        });
     };
 
     this.save = function (_item) {
@@ -53,7 +57,7 @@ function npToolbarCtrl($scope, api, modalDialog, assets, config, orderBy) {
                 controller: npToolbarCtrl,
                 controllerAs: 'ctrl',
                 size: 'md',
-                templateUrl: './np-controller/templates/toolbar-reorder.html'
+                templateUrl: config.client_url + 'np-controller/templates/toolbar-reorder.html'
             });
         });
     };
@@ -89,7 +93,7 @@ function npToolbarCtrl($scope, api, modalDialog, assets, config, orderBy) {
 htmlToPlaintext.$inject = [];
 function htmlToPlaintext() {
     return function (text) {
-        return  text ? String(text).replace(/<[^>]+>/gm, ' ') : '';
+        return text ? String(text).replace(/<[^>]+>/gm, ' ') : '';
     };
 }
 

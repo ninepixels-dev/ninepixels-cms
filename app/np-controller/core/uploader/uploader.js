@@ -2,8 +2,8 @@
 
 'use strict';
 
-npUploaderCtrl.$inject = ['$scope', 'FileUploader', 'token', 'assets', 'modalDialog'];
-function npUploaderCtrl($scope, FileUploader, token, assets, modalDialog) {
+npUploaderCtrl.$inject = ['$scope', 'FileUploader', 'token', 'assets', 'modalDialog', 'config'];
+function npUploaderCtrl($scope, FileUploader, token, assets, modalDialog, config) {
     $scope.galleries = assets.getAsset('galleries');
 
     $scope.uploader = new FileUploader({
@@ -14,8 +14,8 @@ function npUploaderCtrl($scope, FileUploader, token, assets, modalDialog) {
 
     $scope.uploader.onBeforeUploadItem = function (item) {
         return item.formData = [{
-                title: item.formData.title || null,
-                alt: item.formData.alt || null,
+                title: item.formData.title || '',
+                alt: item.formData.alt || '',
                 gallery: $scope._gallery.id || 0
             }];
     };
@@ -33,7 +33,7 @@ function npUploaderCtrl($scope, FileUploader, token, assets, modalDialog) {
             size: 'lg',
             controller: npUploaderCtrl,
             controllerAs: 'ctrl',
-            templateUrl: './np-controller/templates/uploader.html'
+            templateUrl: config.client_url + 'np-controller/templates/uploader.html'
         });
     };
 

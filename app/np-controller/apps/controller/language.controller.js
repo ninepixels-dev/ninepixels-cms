@@ -2,8 +2,8 @@
 
 'use strict';
 
-npLanguageController.$inject = ['$scope', 'api', 'modalDialog', 'assets'];
-function npLanguageController($scope, api, modalDialog, assets) {
+npLanguageController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npLanguageController($scope, api, modalDialog, assets, config) {
     var self = this;
 
     this.manage = function () {
@@ -17,7 +17,7 @@ function npLanguageController($scope, api, modalDialog, assets) {
             controllerAs: 'ctrl',
             bindToController: true,
             size: 'lg',
-            templateUrl: './np-controller/templates/language-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/language-dialog.html'
         });
     };
 

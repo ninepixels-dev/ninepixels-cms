@@ -2,8 +2,8 @@
 
 'use strict';
 
-npPageController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
-function npPageController($scope, api, modalDialog, assets, config) {
+npPageController.$inject = ['$scope', '$timeout', 'api', 'modalDialog', 'assets', 'config'];
+function npPageController($scope, $timeout, api, modalDialog, assets, config) {
     this.manage = function () {
         $scope.pages = assets.getAsset('pages');
         $scope.galleries = assets.getAsset('galleries');
@@ -20,18 +20,20 @@ function npPageController($scope, api, modalDialog, assets, config) {
             controller: 'npPageCtrl',
             controllerAs: 'ctrl',
             size: 'lg',
-            templateUrl: './np-controller/templates/page-view-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/page-view-dialog.html'
         });
     };
 
     this.addNew = function () {
         $scope.status.view = 'form';
+        $scope.update = false;
+
         return $scope.page = {
-            show_header: 1,
-            show_navigation: 1,
-            show_footer: 1,
-            show_in_navigation: 1,
-            visible: 1
+            show_header: true,
+            show_navigation: true,
+            show_footer: true,
+            show_in_navigation: true,
+            visible: true
         };
     };
 
@@ -47,6 +49,8 @@ function npPageController($scope, api, modalDialog, assets, config) {
 
     this.update = function (_page) {
         $scope.status.view = 'form';
+        $scope.update = false;
+
         return $scope.page = _page;
     };
 
@@ -64,8 +68,6 @@ function npPageController($scope, api, modalDialog, assets, config) {
     };
 
     this.save = function (_page) {
-        $scope.update = true;
-
         return _page.id ?
                 api('pages').update(_page).then(callback) :
                 api('pages').add(_page).then(callback);
@@ -86,6 +88,7 @@ function npPageController($scope, api, modalDialog, assets, config) {
 
         $scope.status.view = 'list';
         $scope.update = false;
+
         delete $scope.page;
     };
 
@@ -93,13 +96,18 @@ function npPageController($scope, api, modalDialog, assets, config) {
     function callback(res) {
         if (res.status === 201) {
             $scope.pages = assets.setAsset('pages', res.item);
-        }
-        if (res.status === 200) {
+            $scope.page = res.item;
+
+        } else if (res.status === 200) {
             $scope.pages = assets.updateAsset('pages', res.item);
         }
 
-        delete $scope.page;
-        return $scope.status.view = 'list';
+        $scope.update = true;
+
+        $timeout(function () {
+            $scope.status.view = 'list';
+            delete $scope.page;
+        }, 500, false);
     }
 }
 

@@ -1,8 +1,8 @@
 {
     "company": "Nine Pixels",
-    "title": "Nine Pixels Default Title",
-    "description": "Nine Pixels Default Description",
-    "keywords": "Nine, Pixels, Default, Keywords",
+    "title": "Izrada web aplikacija, sajtova i grafičkih identiteta",
+    "description": "Nine Pixels je agencija za razvoj softvera, koja pruža inovativna rešenja razvijena na najnovijim tehnologijama. Usluge izrade web aplikacija, sajtova, grafičkih identiteta, SEO optimizacije, web hostinga i registracije domena.",
+    "keywords": "Nine, Pixels, Projektovanje, Razvoj, Softvera, Web Dizajn, Softver, Aplikacije, Brendiranje, SEO Optimizacija, Web programiranje",
     "theme_color": "#F44301",
 
     "language": {
@@ -11,7 +11,7 @@
     },
 
     "application": {
-        "type": "onepager",
+        "type": "default",
         "blog_prefix": "blog",
         "apps": [
             "language",
@@ -39,6 +39,11 @@
             "Quotes": "quotes.php",
             "Reference": "reference.php",
             "Reference Single": "reference-single.php",
+            "Blog": "blog.php",
+            "Blog Single": "blog-single.php",
+            "Start a Project": "project.php",
+            "Become Contributor": "contributor.php",
+            "Work With Us": "work-with-us.php",
             "Contact": "contact.php"
         },
         "blog": {

@@ -3,7 +3,6 @@
 angular.module('ninepixels', [
     'angular-loading-bar', 'ui.sortable',
     'ngCookies', 'ui.bootstrap',
-
     'ninepixels.controller',
     'ninepixels.toolbar',
     'ninepixels.pages',
@@ -11,7 +10,6 @@ angular.module('ninepixels', [
     'ninepixels.blog',
     'ninepixels.products',
     'ninepixels.settings',
-
     'ninepixels.authentification',
     'ninepixels.api',
     'ninepixels.api.token',
@@ -21,4 +19,6 @@ angular.module('ninepixels', [
     'ninepixels.ui.modalDialog',
     'ninepixels.ui.uploader'
 
-]).constant('config', config);
+])
+
+.constant('config', config);

@@ -8,6 +8,17 @@
     }
 }
 
+@media only screen and (max-width: 1380px) {
+    .reference-container {
+        .reference-image {
+            width: 60%;
+        }
+        .reference-description {
+            width: 40%;
+        }
+    }
+}
+
 @media only screen and (max-width: 1220px) {
     footer a { display: block; }
 }
@@ -49,7 +60,7 @@
         line-height: 31px;
     }
 
-    section#what-we-do {
+    section#what-we-do article {
         p {
             font-size: 20px;
             line-height: 25px;
@@ -77,6 +88,33 @@
             margin-bottom: 30px;
             letter-spacing: 13px;
         }
+    }
+}
+
+@media only screen and (max-width: 1028px) {
+    .reference-container {
+        .reference-image {
+            width: 50%;
+        }
+        .reference-description {
+            width: 50%;
+        }
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .assist-fields {
+        .col-md-4 {
+            border-right: 0;
+        }
+    }
+
+    #project-page .form-group {
+        margin-top: 30px;
+    }
+
+    #project-page .button-group button {
+        padding: 15px;
     }
 }
 
@@ -114,6 +152,16 @@
         }
     }
     .side-dot-navigation { display: none !important; }
+
+    .reference-container {
+        .reference-image {
+            width: 100%;
+            margin-top: 70px;
+        }
+        .reference-mobile-header {
+            display: block;
+        }
+    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -140,7 +188,7 @@
 
 @media only screen and (max-width: 590px) {
     section#what-we-do {
-        article sp {
+        article p {
             font-size: 20px;
             line-height: 29px;
         }
@@ -167,18 +215,23 @@
             }
             .item.first {
                 .flow-description .heading-1 {
-                    font-size: 39px;
+                    font-size: 36px;
+                    line-height: 38px;
                 }
             }
         }
     }
 
-    section#reference {
+    section#our-work {
         .item .description {
             .heading-2 {
                 font-size: 32px;
                 line-height: 32px;
                 margin-bottom: 5px;
+            }
+            .heading-3 {
+                font-size: 22px;
+                line-height: 32px;
             }
             button {
                 padding: 15px 40px;
@@ -232,7 +285,7 @@
         line-height: 55px;
     }
 
-    section#reference .wrapper .heading-1,
+    section#our-work .wrapper .heading-1,
     section#contact-page .wrapper>.heading-1 {
         font-size: 36px;
         line-height: 50px;
@@ -240,7 +293,7 @@
         margin-bottom: 0px;
     }
 
-    section#reference .wrapper .heading-2,
+    section#our-work .wrapper .heading-2,
     section#contact-page .wrapper>.heading-2 {
         font-size: 25px;
         line-height: 40px;
@@ -283,6 +336,19 @@
         img.scroll-animation { bottom: 15px; }
     }
 
+    section#what-we-do article {
+        h2 {
+            margin-bottom: 22px;
+        }
+        p {
+            font-size: 18px;
+        }
+    }
+
+    section#how-we-do .flow-slider .owl-item ul li button {
+        padding: 15px 45px;
+    }
+
     section#how-we-do { 
         .flow-slider .owl-item {
             .flow-label {
@@ -293,6 +359,10 @@
                 line-height: 25px;
             }
         }
+    }
+
+    section#how-we-do .flow-slider .owl-item.dimmed .flow-navigation {
+        width: 125px;
     }
 }
 
@@ -316,5 +386,12 @@
         }
 
         img.scroll-animation { display: none !important; }
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    section#how-we-do .flow-slider .owl-item .flow-label {
+        font-size: 30px;
+        margin-bottom: 10px;
     }
 }

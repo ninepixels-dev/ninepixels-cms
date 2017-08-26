@@ -22,7 +22,7 @@ function npGalleryController($scope, modalDialog, api, assets, config) {
             size: 'lg',
             controller: npGalleryController,
             controllerAs: 'ctrl',
-            templateUrl: './np-controller/templates/gallery-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/gallery-dialog.html'
         });
     };
 

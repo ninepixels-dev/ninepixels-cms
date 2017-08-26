@@ -40,7 +40,7 @@ function assetService($rootScope, api) {
 
     this.initAsset = function (_asset, _path) {
         api(_path || _asset).fetch().then(function (asset) {
-            assets[_asset] = asset;
+            assets[_asset] = asset || [];
             $rootScope.$broadcast('asset:' + _asset + ':changed', asset);
             localStorage.setItem(_asset, JSON.stringify(asset));
         });
@@ -49,7 +49,7 @@ function assetService($rootScope, api) {
     this.initMainAssets = function () {
         return api('assets').fetch().then(function (_assets) {
             angular.forEach(_assets, function (data, _asset) {
-                assets[_asset] = data;
+                assets[_asset] = data || [];
                 $rootScope.$broadcast('asset:assets:changed', data);
                 localStorage.setItem(_asset, JSON.stringify(data));
             });

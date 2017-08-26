@@ -3,7 +3,7 @@
         var settings = $.extend({
             squareSize: 25,
             animationSpeed: 2000,
-            animationDelay: 20,
+            animationDelay: 30,
             beforeAnimation: false,
             afterAnimation: false
         }, options);
@@ -17,7 +17,6 @@
             // ELEMENT COLOR
             var boxBackgroundColor = elem.css("background-color");
             var boxOpacity = elem.css("opacity");
-            var boxBorder = elem.css("border-left-width") !== "0px" ? elem.css("border") : elem.css("outline");
 
             // ELEMENT DATA
             elem.data({
@@ -27,8 +26,7 @@
             // SET ELEMENT CSS
             elem.css({
                 backgroundColor: "transparent",
-                border: 0,
-                outline: boxBorder
+                border: 0
             });
 
             // ELEMENT SIZE
@@ -65,7 +63,7 @@
             });
 
             // EACH PIXEL STYLE
-            $(".pixelate-container-" + pixelateCounter).children("span.pixel").css({
+            $(".pixelate-container-" + pixelateCounter + " span.pixel").css({
                 display: "inline-block",
                 width: squareSize + "px",
                 height: squareSize + "px",
@@ -74,40 +72,39 @@
             });
 
             // ADD EACH PIXEL FINAL POSITION AND RANDOM POSITION
-            $(".pixelate-container-" + pixelateCounter).children("span.pixel").each(function () {
-                $(this).css({
-                    top: $(this).offset().top,
-                    left: $(this).offset().left
-                });
-            });
-            $(".pixelate-container-" + pixelateCounter).children("span.pixel").each(function () {
+            $(".pixelate-container-" + pixelateCounter + " span.pixel").each(function () {
                 var randomLeft = Math.floor(Math.random() * 600) + (boxWidth / 2);
                 randomLeft *= Math.floor(Math.random() * 2) === 1 ? 1 : -1;
                 var randomTop = Math.floor(Math.random() * 600) + (boxHeight / 2);
                 randomTop *= Math.floor(Math.random() * 2) === 1 ? 1 : -1;
 
+                $(this).data('final', {
+                    top: $(this).offset().top,
+                    left: $(this).offset().left
+                });
+
                 $(this).css({
                     opacity: 0,
-                    marginTop: randomTop,
-                    marginLeft: randomLeft
+                    top: randomTop,
+                    left: randomLeft
                 });
             });
 
             // REMOVE CONTAINER STYLES AND SET PIXELS ABSOLUTE
             $(".pixelate-container-" + pixelateCounter).removeAttr("style");
-            $(".pixelate-container-" + pixelateCounter).children("span.pixel").css("position", "absolute");
+            $(".pixelate-container-" + pixelateCounter + " span.pixel").css("position", "absolute");
 
             // START ANIMATION
             var delay = 0;
-            $(".pixelate-container-" + pixelateCounter).children("span.pixel").each(function (index) {
+            $(".pixelate-container-" + pixelateCounter + " span.pixel").each(function (index) {
                 $(this).delay(delay).animate({
                     opacity: boxOpacity,
-                    marginTop: 0,
-                    marginLeft: 0
+                    top: $(this).data('final').top,
+                    left: $(this).data('final').left
                 }, settings.animationSpeed, function () {
                     if (index === i - 1) {
-                        elem.css("background-color", boxBackgroundColor);
                         $(elem.data("pixelate-container")).remove();
+                        elem.css("background-color", boxBackgroundColor);
                         settings.afterAnimation;
                     }
                 });

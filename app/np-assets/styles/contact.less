@@ -6,20 +6,21 @@ section#contact-page {
     position: relative;
     background-repeat: no-repeat;
     background-image: url(../images/contact-bg.jpg);
-    background-position: center center;
+    background-position: center bottom;
     overflow: hidden;
 
     .wrapper {
-        padding-bottom: 170px;
+        padding-bottom: 100px;
         > .heading-1 {
             margin-top: 130px;
+            margin-bottom: 20px;
         }
     }
 
     .input-field {
         > label {
             position: absolute;
-            top: 20px;
+            top: 22px;
             left: 40px;
         }
         textarea {
@@ -74,5 +75,41 @@ section#contact-page {
                 background-position: center bottom;
             }
         }
+    }
+}
+
+.assist-fields {
+    padding-top: 80px;
+
+    .col-md-4 {
+        padding: 5px 0;
+        text-align: center;
+        border-right: 1px solid @orange;
+
+        a {
+            font-size: 28px;
+            font-weight: 300;
+            color: @dark;       
+
+            b {
+                font-weight: 500;
+                border-bottom: 1px solid @white;
+                padding-bottom: 5px;
+                .transition(all .5s);
+            }
+
+            &:hover {
+                b {
+                    border-bottom: 1px solid @orange;
+                }
+            }
+
+            &:focus, &:active {
+                text-decoration: none;
+            }
+        }
+
+
+        &:last-of-type { border-right: 0; }
     }
 }

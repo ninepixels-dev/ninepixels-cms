@@ -1,4 +1,4 @@
-/* global _ */
+/* global _, moment */
 
 'use strict';
 
@@ -6,6 +6,7 @@ npBlogCtrl.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
 function npBlogCtrl($scope, api, modalDialog, assets, config) {
     this.manage = function () {
         $scope.blogs = assets.getAsset('blogs');
+        $scope.pages = assets.getAsset('pages');
         $scope.templates = config.templates.blog;
         $scope.server_url = config.server_url + config.images.thumbs;
 
@@ -16,7 +17,7 @@ function npBlogCtrl($scope, api, modalDialog, assets, config) {
             controller: 'npBlogCtrl',
             controllerAs: 'ctrl',
             size: 'lg',
-            templateUrl: './np-controller/templates/blog-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/blog-dialog.html'
         });
 
     };
@@ -38,7 +39,9 @@ function npBlogCtrl($scope, api, modalDialog, assets, config) {
                 .replace(/đ/gi, 'dj')
                 .replace(/ +/g, '-').toLowerCase());
 
-        if ($scope.blog.name.indexOf(config.application.blog_prefix + '/') === -1) {
+        if ($scope.blog.page && $scope.blog.name.indexOf($scope.blog.page.name + '/') === -1) {
+            $scope.blog.name = $scope.blog.page.name + '/' + $scope.blog.name;
+        } else if ($scope.blog.name.indexOf(config.application.blog_prefix + '/') === -1) {
             $scope.blog.name = config.application.blog_prefix + '/' + $scope.blog.name;
         }
     };

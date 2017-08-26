@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4>Upravljaj blogovima</h4>
+    <h4>Upravljaj blogovima {{blog.name ? ' | ' + blog.name : ''}}</h4>
     <button type="button" class="btn pull-right" ng-click="ctrl.cancel()">X</button>
 </div>
 
@@ -15,7 +15,7 @@
     </div>
 
     <ul class="np-modal-list">
-        <li ng-repeat="blog in blogs| filter:search track by blog.id">
+        <li ng-repeat="blog in blogs| filter:search| orderBy:'-created' track by blog.id">
             <div class="np-modal-list-name">{{blog.title}}</div>
             <div class="np-modal-list-controls">
                 <span>{{ctrl.date(blog.created)}}</span>
@@ -59,7 +59,18 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 form-group">
+        <div class="col-md-4 form-group">
+            <label>Povezana strana / Kategorija</label>
+            <div class="dropdown">
+                <button class="dropdown-toggle" type="button" data-toggle="dropdown">{{blog.page.name}}</button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="page in pages| orderBy: 'id' track by page.id">
+                        <a ng-click="blog.page = page; ctrl.validate(blog.title)">{{page.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8 form-group">
             <label>Tagovi</label>
             <input type="text" class="form-control" ng-model="blog.tags">
         </div>

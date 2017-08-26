@@ -11,7 +11,7 @@
     </div>
 
     <ul class="np-modal-list">
-        <li ng-repeat="user in users | filter:search | orderBy: 'id' track by user.id">
+        <li ng-repeat="user in users| filter:search | orderBy: 'id' track by user.id">
             <div class="np-modal-list-name">{{user.username}}, {{user.email}}</div>
             <div class="np-modal-list-controls">
                 <span ng-click="ctrl.toggle(user)" ng-if="user.id !== currentUser.id && currentUser.admin" title="Korisnik {{user.enabled ? 'aktiviran' : 'deaktiviran'}}">
@@ -29,6 +29,13 @@
         <div class="col-md-12 form-group">
             <label>Korisničko ime</label>
             <input type="text" class="form-control" ng-model="_user.username">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Ime i Prezime</label>
+            <input type="text" class="form-control" ng-model="_user.name">
         </div>
     </div>
 

@@ -8,7 +8,7 @@ function npMetadata(api, config) {
         scope: {language: '=', page: '=', update: '='},
         controller: 'npPageCtrl',
         controllerAs: 'ctrl',
-        templateUrl: './np-controller/templates/page-metadata.html',
+        templateUrl: config.client_url + 'np-controller/templates/page-metadata.html',
         link: function (scope, elem, attr, ctrl) {
             if (!scope.page)
                 return false;
@@ -22,7 +22,7 @@ function npMetadata(api, config) {
             });
 
             scope.$watch('update', function (update) {
-                if (!update || (scope.metadata && !scope.metadata.navigation))
+                if (!update || !scope.metadata || !scope.metadata.navigation)
                     return false;
 
                 if (scope.metadata.id) {

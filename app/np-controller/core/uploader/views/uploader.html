@@ -43,6 +43,7 @@
                 <button class="btn btn-danger" ng-click="item.remove()" ng-show="!item.isSuccess && !item.isUploading">Obriši</button>
                 <button class="btn btn-warning" ng-click="item.cancel()" ng-show="item.isUploading">Zaustavi</button>
                 <button class="btn btn-success" ng-click="item.remove()" disabled="disabled" ng-show="item.isSuccess">Otpremljeno</button>
+                <button class="btn btn-ninepixels" ng-click="item.upload()"  ng-show="item.isError || item.isCancel">Ponovi</button>
             </div>
         </div>
     </div>
@@ -50,5 +51,4 @@
 
 <div class="modal-footer">
     <button class="btn btn-ninepixels" ng-click="uploader.uploadAll()" ng-if="uploader.queue.length">Uploaduj</button>
-    <button type="button" class="btn btn-ninepixels" ng-click="ctrl.cancel()">Zatvori</button>
 </div>

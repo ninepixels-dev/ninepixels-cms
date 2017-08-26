@@ -2,8 +2,8 @@
 
 'use strict';
 
-npComponentController.$inject = ['$scope', 'api', 'modalDialog', 'assets'];
-function npComponentController($scope, api, modalDialog, assets) {
+npComponentController.$inject = ['$scope', 'api', 'modalDialog', 'assets', 'config'];
+function npComponentController($scope, api, modalDialog, assets, config) {
     this.manage = function () {
         $scope.components = assets.getAsset('components');
         $scope.view = 'list';
@@ -13,7 +13,7 @@ function npComponentController($scope, api, modalDialog, assets) {
             controller: 'npComponentCtrl',
             controllerAs: 'ctrl',
             size: 'lg',
-            templateUrl: './np-controller/templates/component-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/component-dialog.html'
         });
     };
 
@@ -61,44 +61,6 @@ function npComponentController($scope, api, modalDialog, assets) {
         delete $scope._component;
         return $scope.view = 'list';
     }
-
-
-
-
-
-    $scope.save = function (_component) {
-        if (!$scope.edit) {
-            api('components').add(_component).then(callback);
-        } else {
-            api('components').update(_component).then(callback);
-        }
-
-        function callback(res) {
-            if (res.status === 201) {
-                $scope.components = assets.setAsset('components', res.item);
-            } else if (res.status === 200) {
-                $scope.components = assets.updateAsset('components', res.item);
-            }
-
-            $scope.view = 'list';
-            delete $scope._component;
-        }
-    };
-
-    $scope._update = function (_component) {
-        $scope._component = _component;
-        $scope.view = 'add';
-        $scope.edit = true;
-    };
-
-    $scope._delete = function (_component) {
-        _component.active = 0;
-        api('components').update(_component).then(function (res) {
-            if (res.status === 200) {
-                $scope.components = assets.removeAsset('components', _component);
-            }
-        });
-    };
 }
 
 angular.module('ninepixels.controller')

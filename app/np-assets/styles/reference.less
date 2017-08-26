@@ -2,7 +2,7 @@
 @import 'mixins';
 
 // Reference Page
-section#reference {
+section#our-work {
     .wrapper {
         .heading-1 {
             margin-top: 122px;
@@ -17,11 +17,13 @@ section#reference {
     }
 
     .reference-slider {
+        overflow: hidden;
         background-color: @darker;
         cursor: url(../images/reference-cursor-default.png), auto;
-        &.owl-grab {
+/*        &.owl-grab {
             cursor: url(../images/reference-cursor-dragged.png), auto;
         }
+*/
     }
 
     .item {
@@ -36,6 +38,9 @@ section#reference {
             padding: 0 15px;
             box-sizing: border-box;
             .transition(.5s);
+            a {
+                display: none;
+            }
             button { 
                 display: none;
                 margin-top: 80px;
@@ -64,7 +69,7 @@ section#reference {
 
         &:hover {
             img { opacity: 0; }
-            button { display: inline-block; }
+            a { display: inline-block; }
             .description { margin-top: -120px; }
             h2 { font-size: 58px; }
         }

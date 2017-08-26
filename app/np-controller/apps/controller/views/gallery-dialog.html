@@ -3,14 +3,14 @@
     <button type="button" class="btn btn-default pull-right" ng-click="ctrl.cancel()">X</button>
 </div>
 
-<div class="modal-body">
+<div class="modal-body" ng-if="galleries.length">
     <div class="row col-md-12 np-gallery-controls" ng-show="!selected">
         <label>Pretraga</label>
         <div class="row">
             <div class="col-md-9 form-group">
                 <input type="text" class="form-control" ng-model="search.name" ng-trim="false">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 align-right">
                 <button type="button" class="btn btn-ninepixels" ng-click="ctrl.add()">Dodaj galeriju</button>
             </div>
         </div>
@@ -40,8 +40,14 @@
     </div>
 </div>
 
+<div class="modal-body" ng-if="!galleries.length">
+    <div class="np-modal-empty">
+        Trenutno nemate definisanih galerija
+        <a href="" ng-click="ctrl.add()">Dodajte prvu</a>
+    </div>
+</div>
+
 <div class="modal-footer">
     <button type="button" ng-show="selected" class="btn btn-ninepixels" ng-if="selected.images.length" ng-controller="npUploaderCtrl as upload" ng-click="upload.manage(selected)">Dodaj</button>
     <button type="button" ng-show="selected" class="btn btn-ninepixels" ng-click="ctrl.update(selected)" ng-if="selected.images.length">Sačuvaj</button>
-    <button type="button" class="btn btn-ninepixels" ng-click="ctrl.cancel()">Zatvori</button>
 </div>

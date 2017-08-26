@@ -89,6 +89,18 @@ body.with-toolbar {
         }
     }
 
+    .btn-close {
+        color: @orange;
+        border-color: @orange;
+        border-radius: 0;
+        background-color: transparent;
+        &:hover, &:focus, &:active {
+            color: @white;
+            background-color: @orange;
+            outline: none;
+        }
+    }
+
     .btn--flat {
         border-radius: 0;
     } 
@@ -133,6 +145,7 @@ body.with-toolbar {
             z-index: 9999;
 
             li {
+                position: relative;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -141,6 +154,37 @@ body.with-toolbar {
 
                 &:before {
                     display: none;
+                }
+
+                &:hover {
+                    .dropdown-menu__actions {
+                        display: block;
+                    }
+                }
+            }
+
+            &--with-actions {
+                li {
+                    position: relative;
+                }
+                a {
+                    padding-right: 25px;
+                }
+            }
+
+            &__actions {
+                display: none;
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                span {
+                    padding: 0 5px;
+                    &:hover {
+                        i {color: @orange;}
+                    }
+                    &:focus, &:active {
+                        outline: none;
+                    }
                 }
             }
         }
@@ -212,6 +256,10 @@ body.with-toolbar {
             &.true { display: none; }
             &.false { min-width: 90px; }
         }
+    }
+
+    .align-right {
+        text-align: right;
     }
 }
 

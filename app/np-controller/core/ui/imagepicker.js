@@ -16,7 +16,7 @@ function npImagePicker(assets, modalDialog, config) {
                 return scope.modal = modalDialog.showModal({
                     scope: modalScope,
                     size: 'lg',
-                    templateUrl: './np-controller/templates/imagepicker.html'
+                    templateUrl: config.client_url + 'np-controller/templates/imagepicker.html'
                 });
             };
 
@@ -35,11 +35,52 @@ function npImagePicker(assets, modalDialog, config) {
             };
 
             modalScope.cancel = function () {
+                if (modalScope.selected)
+                    return delete modalScope.selected;
+
                 return scope.modal.close();
             };
         }
     };
 }
 
+npImagePickerController.$inject = ['$scope', 'assets', 'modalDialog', 'config'];
+function npImagePickerController($scope, assets, modalDialog, config) {
+    $scope.galleries = assets.getAsset('gallery/images');
+    $scope.server_url = config.server_url + config.images.thumbs;
+
+    this.trigger = function () {
+        return new Promise(function (resolve) {
+            $scope.modal = modalDialog.showModal({
+                scope: $scope,
+                size: 'lg',
+                templateUrl: config.client_url + 'np-controller/templates/imagepicker.html'
+            });
+
+            $scope.select = function (gallery) {
+                if (!gallery)
+                    return delete $scope.selected;
+
+                return $scope.selected = gallery.images;
+            };
+
+            $scope.pick = function (image) {
+                delete $scope.selected;
+                $scope.modal.close();
+
+                return resolve(image);
+            };
+
+            $scope.cancel = function () {
+                if ($scope.selected)
+                    return delete $scope.selected;
+
+                $scope.modal.close();
+            };
+        });
+    };
+}
+
 angular.module('ninepixels.ui')
-        .directive('npImagePicker', npImagePicker);
+        .directive('npImagePicker', npImagePicker)
+        .controller('npImagePickerCtrl', npImagePickerController);

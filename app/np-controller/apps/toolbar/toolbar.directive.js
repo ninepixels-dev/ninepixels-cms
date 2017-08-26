@@ -1,17 +1,18 @@
 'use strict';
 
-npToolbar.$inject = [];
-function npToolbar() {
+npToolbar.$inject = ['config'];
+function npToolbar(config) {
     return {
         scope: {
             item: '=item',
             page: '=page',
+            lang: '@language',
             ident: '@identifier'
         },
         transclude: true,
         controller: 'npToolbarCtrl',
         controllerAs: 'ctrl',
-        templateUrl: './np-controller/templates/np-toolbar.html',
+        templateUrl: config.client_url + 'np-controller/templates/np-toolbar.html',
         link: function (scope, elem, attr, ctrl) {
             var floatingPanel = elem.find('.np-floating-panel');
 

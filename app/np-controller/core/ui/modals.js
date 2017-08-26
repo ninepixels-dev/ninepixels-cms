@@ -14,7 +14,7 @@ function modalDialogService($uibModal, config) {
         return new Promise(function (resolve, reject) {
             return $uibModal.open({
                 size: 'md',
-                templateUrl: './np-controller/templates/confirmation.html',
+                templateUrl: config.client_url + 'np-controller/templates/confirmation.html',
                 windowClass: 'np-modal',
                 controller: function ($uibModalInstance) {
                     this.message = message || 'Da li ste sigurni?';
@@ -38,7 +38,7 @@ function modalDialogService($uibModal, config) {
         return new Promise(function (resolve, reject) {
             return $uibModal.open({
                 size: 'md',
-                templateUrl: './np-controller/templates/dialog-box.html',
+                templateUrl: config.client_url + 'np-controller/templates/dialog-box.html',
                 windowClass: 'np-modal',
                 controller: function ($scope, $uibModalInstance) {
                     this.header = header || 'Unesite podatke';

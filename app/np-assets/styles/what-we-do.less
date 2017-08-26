@@ -11,6 +11,19 @@ section#what-we-do {
         vertical-align: top;
         width: 33.1%;
         padding: 0 3%;
+
+/*        opacity: 0;
+        margin-top: -200px;
+        margin-bottom: 200px;*/
+
+        .transition(all 1.5s);
+
+        &.active {
+            opacity: 1;
+            margin-top: 0;
+            margin-bottom: 0;
+
+        }
     }
     svg {
         height: 180px;

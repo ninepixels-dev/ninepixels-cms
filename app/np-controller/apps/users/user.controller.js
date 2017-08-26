@@ -17,7 +17,7 @@ function npUsersController($scope, $cookies, api, modalDialog, assets, config) {
             controllerAs: 'ctrl',
             scope: $scope,
             size: 'md',
-            templateUrl: './np-controller/templates/users-dialog.html'
+            templateUrl: config.client_url + 'np-controller/templates/users-dialog.html'
         });
     };
 

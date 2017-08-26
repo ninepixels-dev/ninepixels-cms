@@ -3,12 +3,13 @@
 // Function for generating item/editor object
 function npEditor($element, $class, $item, $withoutContent = false) {
     $classes = isset($item->classes) ? (empty($class) ? '' : ' ') . $item->classes : '';
+    $language = empty($GLOBALS['LANGUAGE']) ? '' : $GLOBALS['LANGUAGE_CODE'];
     $visible = isset($item->visible) && $item->visible === 0 ? ' np-toggle-off' : '';
 
     echo '<' . $element . ' ';
     echo 'class="' . $class . $classes . $visible . '" ';
     if (isset($_COOKIE['user'])) {
-        echo 'np-toolbar data-item="' . $item->id . '" data-identifier="' . $item->identifier . '" data-page="' . $GLOBALS['PAGE']->id . '"';
+        echo 'np-toolbar data-item="' . $item->id . '" data-identifier="' . $item->identifier . '" data-language="' . $language . '" data-page="' . $GLOBALS['PAGE']->id . '"';
     }
     echo '>';
 
@@ -19,10 +20,12 @@ function npEditor($element, $class, $item, $withoutContent = false) {
 }
 
 // Function for generating image object
-function npImage($item, $classes = '', $thumbs = false) {
+function npImage($item, $classes = '', $thumbs = false, $additional = false) {
     if (isset($item->image)) {
         $thumbs = $thumbs ? 'uploads/' . $thumbs . '/' : 'uploads/';
-        echo '<img class="' . $classes . '" src="' . $GLOBALS['SERVER_URL'] . $thumbs . $item->image->url . '" alt="' . (property_exists($item->image, 'alt') ? $item->image->alt : '') . '" title="' . (property_exists($item->image, 'title') ? $item->image->title : '') . '"/>';
+        $additional ? $additional : '';
+
+        echo '<img class="' . $classes . '" src="' . $GLOBALS['SERVER_URL'] . $thumbs . $item->image->url . '" alt="' . (property_exists($item->image, 'alt') ? $item->image->alt : '') . '" title="' . (property_exists($item->image, 'title') ? $item->image->title : '') . '"' . $additional . '/>';
     }
 }
 
@@ -40,11 +43,16 @@ function getContent($path, $filter = false) {
 
 // Function for returning metadata for requested page
 function getMetadata($page) {
+    // If page is blog
+    if (isset($page->content)) {
+        return (object) array('title' => $page->title, 'description' => limit_text($page->content, 20, true));
+    }
+
     foreach ($GLOBALS['METADATAS'] as $metadata) {
         $lang = empty($GLOBALS['LANGUAGE']) ? '' : $GLOBALS['LANGUAGE_CODE'];
         $is_lang = property_exists($metadata, 'language') ? $metadata->language->code === $lang : false;
 
-        if ($metadata->page->id === $page->id && (!empty($lang) ? $is_lang : true)) {
+        if ($metadata->page->id === $page->id && (!empty($lang) ? $is_lang : !property_exists($metadata, 'language'))) {
             return $metadata;
         }
     }
@@ -53,14 +61,14 @@ function getMetadata($page) {
 }
 
 // Function for filtering items
-function filterBy($items, $key, $value, $page = false, $sort = false) {
+function filterBy($items, $key, $value, $item = true, $sort = false) {
     $array = array_filter($items, function($obj) use ($key, $value) {
         if (property_exists($obj, $key)) {
             return $obj->{$key} == $value ? true : false;
         }
     });
 
-    if (empty($array) && isset($_COOKIE['user']) && !$page) {
+    if (empty($array) && isset($_COOKIE['user']) && $item) {
         return array((object) array("id" => 0, "identifier" => $value, "structure" => '<div class="np-item-holder-text">' . $value . '</div>', "classes" => "np-item-holder"));
     }
 
@@ -87,10 +95,14 @@ function translate($string) {
         }
     }
 
+    $current = file_exists('untranslated.txt') ? file_get_contents('untranslated.txt') : '';
+    $current .= $string . "\r\n";
+    file_put_contents('untranslated.txt', $current);
+
     return $string;
 }
 
-// Return pageNotFound object
+// PageNotFound object
 function pageNotFound() {
     $GLOBALS['PAGE'] = (object) array('id' => '-1', 'name' => 'Strana nije pronadjena', 'show_header' => '1', 'show_footer' => 1, 'template' => 'error_404.php');
     return $GLOBALS['METADATA'] = (object) array('title' => 'Strana nije pronadjena', 'description' => 'Page Not Found');
@@ -114,6 +126,16 @@ function _isset(&$data1, $data2 = '') {
     return isset($data1) ? $data1 : $data2;
 }
 
+// Function for parsing link
+function _url($url = false) {
+    if (!$url) {
+        return $GLOBALS['CLIENT_URL'];
+    }
+
+    $language = isset($GLOBALS['LANGUAGE_CODE']) ? $GLOBALS['LANGUAGE_CODE'] . '/' : '';
+    return $GLOBALS['CLIENT_URL'] . $language . $url . $GLOBALS['WITHOUT_TOOLBAR'];
+}
+
 // Function for checking if user is logged in
 function isLoggedIn($withoutToolbar = false) {
     if ($withoutToolbar) {
@@ -126,4 +148,23 @@ function isLoggedIn($withoutToolbar = false) {
 // Function for checking if is login page
 function isLoginPage() {
     return isset($GLOBALS['PAGE']->name) && $GLOBALS['PAGE']->name === 'login-page';
+}
+
+// Format datetime object
+function formatDate($date, $format) {
+    return date_format(date_create($date), $format);
+}
+
+// Function for limiting text
+function limit_text($text, $limit, $stripHTML = false) {
+    if ($stripHTML) {
+        $text = strip_tags($text);
+    }
+
+    if (str_word_count($text, 0) > $limit) {
+        $words = str_word_count($text, 2);
+        $pos = array_keys($words);
+        $text = substr($text, 0, $pos[$limit]) . '...';
+    }
+    return $text;
 }

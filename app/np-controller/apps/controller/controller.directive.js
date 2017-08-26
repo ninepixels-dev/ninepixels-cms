@@ -3,7 +3,7 @@
 npController.$inject = ['$cookies', '$window', 'assets', 'config'];
 function npController($cookies, $window, assets, config) {
     return {
-        templateUrl: './np-controller/templates/controller.html',
+        templateUrl: config.client_url + 'np-controller/templates/controller.html',
         link: function (scope) {
             scope.user = $cookies.getObject('user');
             scope.config = config;
@@ -15,7 +15,7 @@ function npController($cookies, $window, assets, config) {
                     return val === app;
                 });
             };
-            
+
             scope.logout = function () {
                 $cookies.remove('token');
                 $cookies.remove('user');
