@@ -11,10 +11,14 @@ module.exports = function (grunt) {
             'node_modules/angular-sanitize/angular-sanitize.min.js',
             'node_modules/angular-translate/angular-translate.min.js',
             'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+            'node_modules/angular-ui-sortable/dist/sortable.min.js',
             'node_modules/angular-file-upload/dist/angular-file-upload.min.js',
             'node_modules/angular-file-saver/dist/angular-file-saver.bundle.min.js',
             'node_modules/angular-loading-bar/build/loading-bar.min.js',
+            'node_modules/angular-filter/dist/angular-filter.min.js',
+            'node_modules/jquery-ui/jquery-ui.min.js',
             'node_modules/underscore/underscore-min.js',
+            'node_modules/moment/min/moment.min.js',
             'node_modules/fullcalendar/dist/fullcalendar.min.js',
             'node_modules/fullcalendar/dist/locale/sr.js',
             'node_modules/intl-tel-input/build/js/intlTelInput.min.js',
@@ -25,22 +29,27 @@ module.exports = function (grunt) {
             'node_modules/angular-material/angular-material.min.css',
             'node_modules/angular-loading-bar/build/loading-bar.min.css',
             'node_modules/fullcalendar/dist/fullcalendar.min.css',
-            'node_modules/font-awesome/css/font-awesome.min.css',
             'node_modules/medium-editor/dist/css/medium-editor.min.css',
             'node_modules/medium-editor/dist/css/themes/flat.min.css',
-            'node_modules/medium-editor-tables/dist/css/medium-editor-tables.min.css'
+            'node_modules/medium-editor-tables/dist/css/medium-editor-tables.min.css',
+            '.tmp/controller.css'
         ],
         controller: [
+            '.tmp/init.config.js',
+
             'app/np-controller/config.js',
 
             'app/np-controller/apps/controller/controller.directive.js',
-            'app/np-controller/apps/controller/user.controller.js',
             'app/np-controller/apps/controller/asset.service.js',
-            'app/np-controller/apps/controller/asset.controller.js',
+            'app/np-controller/apps/controller/component.controller.js',
+            'app/np-controller/apps/controller/gallery.controller.js',
+            'app/np-controller/apps/controller/language.controller.js',
             'app/np-controller/apps/pages/page.controller.js',
+            'app/np-controller/apps/pages/pagelist.directive.js',
+            'app/np-controller/apps/pages/metadata.directive.js',
+            'app/np-controller/apps/users/user.controller.js',
             'app/np-controller/apps/toolbar/toolbar.directive.js',
             'app/np-controller/apps/toolbar/toolbar.controller.js',
-            'app/np-controller/apps/toolbar/pickimage.directive.js',
             'app/np-controller/apps/blog/blog.controller.js',
             'app/np-controller/apps/products/products.controller.js',
             'app/np-controller/apps/settings/settings.controller.js',
@@ -51,32 +60,37 @@ module.exports = function (grunt) {
             'app/np-controller/core/login/login.js',
             'app/np-controller/core/notify/notify.js',
             'app/np-controller/core/calendar/calendar.js',
+            'app/np-controller/core/uploader/uploader.js',
             'app/np-controller/core/ui/ui.js',
-            'app/np-controller/core/ui/modal-dialog.js',
+            'app/np-controller/core/ui/modals.js',
             'app/np-controller/core/ui/html-editor.js',
+            'app/np-controller/core/ui/imagepicker.js',
             'app/np-controller/core/ui/typeahead.js',
-            'app/np-controller/core/ui/uploader.js'
+            'app/np-controller/core/ui/switcher.js'
         ]
     };
 
     var app = {
         js: [
-            'node_modules/jquery/dist/jquery.js',
-            'node_modules/moment/min/moment.min.js',
+            'node_modules/jquery/dist/jquery.min.js',
             'node_modules/bootstrap/dist/js/bootstrap.min.js',
-            'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+
+            // Additional libraries
+            'node_modules/vivus/dist/vivus.min.js',
             'node_modules/owl.carousel/dist/owl.carousel.min.js',
-            'node_modules/fancybox/dist/js/jquery.fancybox.js',
+            //'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+            //'node_modules/fancybox/dist/js/jquery.fancybox.js',
+            //'node_modules/waypoints/lib/jquery.waypoints.min.js',
 
             'app/np-assets/scripts/**/*.js'
         ],
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
-            'node_modules/fancybox/dist/css/jquery.fancybox.css',
-            'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
             'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
-            'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
-            '.tmp/app.css'
+            //'node_modules/fancybox/dist/css/jquery.fancybox.css',
+            //'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+            //'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
+            '.tmp/font-file.css', '.tmp/app.css'
         ]
     };
 
@@ -90,6 +104,21 @@ module.exports = function (grunt) {
             server: ['dist/np-controller/server']
         },
 
+        googlefonts: {
+            build: {
+                options: {
+                    fontPath: './dist/np-assets/fonts/',
+                    cssFile: '.tmp/font-file.css',
+                    httpPath: '../fonts/',
+                    fonts: [{
+                            family: 'Roboto Condensed',
+                            styles: [300, 400, 700],
+                            subsets: ['latin', 'latin-ext']
+                        }]
+                }
+            }
+        },
+
         less: {
             options: {
                 paths: 'app/np-assets/styles',
@@ -97,9 +126,14 @@ module.exports = function (grunt) {
                 compress: true,
                 cleancss: true
             },
-            dist: {
+            controller: {
                 files: {
-                    '.tmp/app.css': ['app/**/*.less']
+                    '.tmp/controller.css': ['app/np-controller/**/*.less']
+                }
+            },
+            app: {
+                files: {
+                    '.tmp/app.css': ['app/**/*.less', '!app/np-controller/**/*.less']
                 }
             }
         },
@@ -107,10 +141,11 @@ module.exports = function (grunt) {
         cssmin: {
             options: {
                 banner: '/*! Nine Pixels Seed 0.0.1 | Nemanja Pavlovic @ Nine Pixels | MIT Licensed */',
+                keepSpecialComments: 0,
                 livereload: true,
                 report: 'gzip'
             },
-            vendor: {
+            controller: {
                 files: {
                     'dist/np-assets/css/vendor.min.css': vendor.css
                 }
@@ -122,10 +157,20 @@ module.exports = function (grunt) {
             }
         },
 
+        json_to_object: {
+            options: {
+                varname: 'config'
+            },
+            config: {
+                files: {
+                    '.tmp/init.config.js': ['app/np.config.json']
+                }
+            }
+        },
+
         uglify: {
             options: {
                 mangle: false,
-                livereload: true,
                 sourceMap: true,
                 sourceMapIncludeSources: true
             },
@@ -146,7 +191,6 @@ module.exports = function (grunt) {
             },
             production: {
                 options: {
-                    banner: '/*! Nine Pixels Seed 0.0.1 | Nemanja Pavlovic @ Nine Pixels | MIT Licensed */',
                     sourceMap: false,
                     preserveComments: false,
                     compress: {
@@ -166,19 +210,36 @@ module.exports = function (grunt) {
                 removeComments: true,
                 collapseWhitespace: true
             },
-            templates: {
+            tasks: ['clean:php'],
+            controller: {
                 files: [{
                         expand: true,
                         flatten: true,
                         src: ['app/np-controller/**/*.html'],
                         dest: 'dist/np-controller/templates/'
                     }]
+            },
+            index: {
+                files: [{
+                        expand: true,
+                        flatten: true,
+                        src: 'app/*.php',
+                        dest: 'dist/'
+                    }]
+            },
+            templates: {
+                files: [{
+                        expand: true,
+                        flatten: true,
+                        src: ['app/np-templates/**/*'],
+                        dest: 'dist/np-templates/'
+                    }]
             }
         },
 
         imagemin: {
             options: {
-                optimizationLevel: 5
+                optimizationLevel: 7
             },
             dist: {
                 files: [{
@@ -199,33 +260,21 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            php: {
-                expand: true,
-                src: 'app/*.php',
-                dest: 'dist/',
-                flatten: true
-            },
-            fontAwesome: {
-                expand: true,
-                src: 'node_modules/font-awesome/fonts/*',
-                dest: 'dist/np-assets/fonts/',
-                flatten: true
-            },
             fontBootstrap: {
                 expand: true,
                 src: 'node_modules/bootstrap/fonts/*',
                 dest: 'dist/np-assets/fonts/',
                 flatten: true
             },
-            templates: {
-                expand: true,
-                src: 'app/np-templates/**/*',
-                dest: 'dist/np-templates/',
-                flatten: true
-            },
             server: {
                 expand: true,
                 src: 'app/np-controller/server/**/*',
+                dest: 'dist/np-controller/server/',
+                flatten: true
+            },
+            config: {
+                expand: true,
+                src: 'app/np.config.json',
                 dest: 'dist/np-controller/server/',
                 flatten: true
             }
@@ -241,12 +290,16 @@ module.exports = function (grunt) {
                 tasks: ['clean:structure', 'build']
             },
             index: {
-                files: ['app/index.php', 'app/debug.php'],
-                tasks: ['copy:php']
+                files: ['app/*.php'],
+                tasks: ['htmlmin:index']
             },
-            less: {
+            appless: {
                 files: ['app/np-assets/styles/*.less'],
-                tasks: ['less', 'cssmin:app']
+                tasks: ['less:app', 'cssmin:app']
+            },
+            controllerless: {
+                files: ['app/np-controller/**/*.less'],
+                tasks: ['less:controller', 'cssmin:controller']
             },
             vendorjs: {
                 files: vendor.js,
@@ -270,11 +323,15 @@ module.exports = function (grunt) {
             },
             templates: {
                 files: ['app/np-templates/**/*'],
-                tasks: ['copy:templates']
+                tasks: ['htmlmin:templates']
             },
             server: {
                 files: ['app/np-controller/server/*'],
-                tasks: ['clean:server', 'copy:server']
+                tasks: ['clean:server', 'copy:server', 'copy:config']
+            },
+            config: {
+                files: ['app/np.config.json'],
+                tasks: ['json_to_object', 'copy:config', 'uglify:controller']
             }
         },
 
@@ -293,7 +350,7 @@ module.exports = function (grunt) {
             prod: {
                 options: {
                     authKey: "server",
-                    host: "te-cooling.rs",
+                    host: "ninepixels.io",
                     dest: "/",
                     port: 21,
                     incrementalUpdates: false
@@ -314,8 +371,10 @@ module.exports = function (grunt) {
     // Generate grunt tasks
     grunt.registerTask('build', [
         'clean:structure',
+        'googlefonts',
         'less',
         'cssmin',
+        'json_to_object',
         'uglify:vendor',
         'uglify:controller',
         'uglify:app',
@@ -326,8 +385,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask('production', [
         'clean:structure',
+        'googlefonts',
         'less',
         'cssmin',
+        'json_to_object',
         'uglify:production',
         'htmlmin',
         'imagemin:dist',
