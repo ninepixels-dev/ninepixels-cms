@@ -127,13 +127,18 @@ function _isset(&$data1, $data2 = '') {
 }
 
 // Function for parsing link
-function _url($url = false) {
-    if (!$url) {
-        return $GLOBALS['CLIENT_URL'];
-    }
-
+function _url($url = '') {
     $language = isset($GLOBALS['LANGUAGE_CODE']) ? $GLOBALS['LANGUAGE_CODE'] . '/' : '';
     return $GLOBALS['CLIENT_URL'] . $language . $url . $GLOBALS['WITHOUT_TOOLBAR'];
+}
+
+// Function for generating image url
+function _imageUrl($item, $thumbs = false) {
+    if (isset($item->image)) {
+        $thumbs = $thumbs ? 'uploads/' . $thumbs . '/' : 'uploads/';
+
+        return $GLOBALS['SERVER_URL'] . $thumbs . $item->image->url;
+    }
 }
 
 // Function for checking if user is logged in

@@ -25,8 +25,8 @@
         "gallery": "uploads/gallery/"
     },
 
-    "server_url": "http://localhost:8000/",
-    "client_url": "http://localhost:8100/",
+    "server_url": "https://www.ninepixels.rs/np-api/web/",
+    "client_url": "https://www.ninepixels.rs/",
     "client_id": "1_4wa53jau44kkw8g8c4c48s8sk8og4kkggoooc0sss00c0gksw0",
     "client_secret": "4qtr6ypfdqg44skw88k40g4kkco8w44k0080wwow4sk44owogk",
 

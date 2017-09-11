@@ -17,10 +17,11 @@
         <!-- OpenGraph -->
         <meta property="og:title" content="<?php echo _isset($GLOBALS['METADATA']->title, $GLOBALS['CONFIG']->title) ?>" />
         <meta property="og:description" content="<?php echo _isset($GLOBALS['METADATA']->description, $GLOBALS['CONFIG']->description) ?>" />
-        <meta property="og:image" content="<?php echo $GLOBALS['CLIENT_URL'] . _isset($GLOBALS['PAGE']->image->url, 'np-assets/images/logo.png') ?>" />
+        <meta property="og:image" content="<?php echo isset($GLOBALS['PAGE']->image->url) ? _imageUrl($GLOBALS['PAGE'], 'gallery') : $GLOBALS['CLIENT_URL'] . 'np-assets/images/logo.png' ?>" />
         <meta property="og:url" content="<?php echo $GLOBALS['CLIENT_URL']; ?>">
         <meta property="og:site_name" content="<?php echo $GLOBALS['CONFIG']->company ?>">
-        <meta property="fb:admins" content="">
+        <meta property="fb:admins" content="581557521986990">
+        <meta property="fb:app_id" content="114398532614314">
         <meta property="og:type" content="website">
         <!-- OpenGraph END -->
 
@@ -31,7 +32,7 @@
         <meta name="twitter:url" content="<?php echo $GLOBALS['CLIENT_URL']; ?>">
         <meta name="twitter:title" content="<?php echo _isset($GLOBALS['METADATA']->title, $GLOBALS['CONFIG']->title) ?>">
         <meta name="twitter:description" content="<?php echo _isset($GLOBALS['METADATA']->description, $GLOBALS['CONFIG']->description) ?>">
-        <meta name="twitter:image" content="<?php echo $GLOBALS['CLIENT_URL'] . _isset($GLOBALS['PAGE']->image->url, 'np-assets/images/logo.png') ?>">
+        <meta name="twitter:image" content="<?php echo isset($GLOBALS['PAGE']->image->url) ? _imageUrl($GLOBALS['PAGE'], 'gallery') : $GLOBALS['CLIENT_URL'] . 'np-assets/images/logo.png' ?>">
         <!-- Twitter Card END-->
 
         <?php
