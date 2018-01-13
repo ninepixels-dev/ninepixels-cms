@@ -52,6 +52,7 @@ module.exports = function (grunt) {
             'app/np-controller/apps/toolbar/toolbar.controller.js',
             'app/np-controller/apps/blog/blog.controller.js',
             'app/np-controller/apps/products/products.controller.js',
+            'app/np-controller/apps/travel/travel.controller.js',
             'app/np-controller/apps/settings/settings.controller.js',
 
             'app/np-controller/core/auth/auth.js',
