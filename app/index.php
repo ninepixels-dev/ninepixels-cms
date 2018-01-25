@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" type="image/png" href="/np-assets/images/favicon.png" />
-        <title><?php echo $GLOBALS['CONFIG']->company . ': ' . _isset($GLOBALS['METADATA']->title, $GLOBALS['CONFIG']->title) ?></title>
+        <title><?php echo _isset($GLOBALS['METADATA']->title, $GLOBALS['CONFIG']->title) . ' :: ' . $GLOBALS['CONFIG']->company ?></title>
 
         <!-- DefaultMeta -->
         <meta name="description" content="<?php echo _isset($GLOBALS['METADATA']->description, $GLOBALS['CONFIG']->description) ?>">
@@ -34,6 +34,9 @@
         <meta name="twitter:description" content="<?php echo _isset($GLOBALS['METADATA']->description, $GLOBALS['CONFIG']->description) ?>">
         <meta name="twitter:image" content="<?php echo isset($GLOBALS['PAGE']->image->url) ? _imageUrl($GLOBALS['PAGE'], 'gallery') : $GLOBALS['CLIENT_URL'] . 'np-assets/images/logo.png' ?>">
         <!-- Twitter Card END-->
+
+        <!-- Remove this before publish -->
+        <meta name="robots" content="noindex,nofollow">
 
         <?php
         // Without Caching for inside iframe

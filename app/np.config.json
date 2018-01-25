@@ -1,5 +1,5 @@
 {
-    "company": "Nine Pixels",
+    "company": "Leto u Grckoj",
     "title": "",
     "description": "",
     "keywords": "",
@@ -13,9 +13,10 @@
     "application": {
         "type": "default",
         "blog_prefix": "blog",
+        "travel_prefix": "smestaj",
         "apps": [
-            "language",
-            "blog"
+            "blog",
+            "travel"
         ]
     },
 
@@ -25,20 +26,24 @@
         "gallery": "uploads/gallery/"
     },
 
-    "server_url": "https://www.ninepixels.rs/np-api/web/",
-    "client_url": "https://www.ninepixels.rs/",
-    "client_id": "1_4wa53jau44kkw8g8c4c48s8sk8og4kkggoooc0sss00c0gksw0",
-    "client_secret": "4qtr6ypfdqg44skw88k40g4kkco8w44k0080wwow4sk44owogk",
+    "server_url": "http://letougrckoj.ninepixels.rs/np-api/web/",
+    "client_url": "http://localhost:8100/",
+    "client_id": "1_tyikl6swwf4g8wso8sks0444s84ko8ccgwggogwgkks8gk4sg",
+    "client_secret": "4m5bnf4rikkk8gok8gck4008k0gkc8kgo8kcogg44gok4cockc",
 
     "templates": {
         "default": {
             "Homepage": "homepage.php",
             "List View": "list-view.php",
             "Single View": "single-view.php",
+            "Grid View": "grid-view.php",
             "Contact": "contact.php"
         },
         "blog": {
             "Blog Single": "blog-single.php"
+        },
+        "travel": {
+            "Travel Single": "single-view.php"
         }
     }
 }
