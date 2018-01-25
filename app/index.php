@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" type="image/png" href="/np-assets/images/favicon.png" />
-        <title><?php echo $GLOBALS['CONFIG']->company . ': ' . _isset($GLOBALS['METADATA']->title, $GLOBALS['CONFIG']->title) ?></title>
+        <title><?php echo _isset($GLOBALS['METADATA']->title, $GLOBALS['CONFIG']->title) . ' :: ' . $GLOBALS['CONFIG']->company ?></title>
 
         <!-- DefaultMeta -->
         <meta name="description" content="<?php echo _isset($GLOBALS['METADATA']->description, $GLOBALS['CONFIG']->description) ?>">
