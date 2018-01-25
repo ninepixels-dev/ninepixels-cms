@@ -18,7 +18,6 @@ module.exports = function (grunt) {
             'node_modules/angular-filter/dist/angular-filter.min.js',
             'node_modules/jquery-ui/jquery-ui.min.js',
             'node_modules/underscore/underscore-min.js',
-            'node_modules/moment/min/moment.min.js',
             'node_modules/fullcalendar/dist/fullcalendar.min.js',
             'node_modules/fullcalendar/dist/locale/sr.js',
             'node_modules/intl-tel-input/build/js/intlTelInput.min.js',
@@ -51,8 +50,9 @@ module.exports = function (grunt) {
             'app/np-controller/apps/toolbar/toolbar.directive.js',
             'app/np-controller/apps/toolbar/toolbar.controller.js',
             'app/np-controller/apps/blog/blog.controller.js',
-            'app/np-controller/apps/product/product.controller.js',
             'app/np-controller/apps/travel/travel.controller.js',
+            'app/np-controller/apps/product/product.controller.js',
+            'app/np-controller/apps/events/events.controller.js',
             'app/np-controller/apps/settings/settings.controller.js',
 
             'app/np-controller/core/auth/auth.js',
@@ -74,12 +74,13 @@ module.exports = function (grunt) {
     var app = {
         js: [
             'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/moment/min/moment.min.js',
             'node_modules/bootstrap/dist/js/bootstrap.min.js',
 
             // Additional libraries
             'node_modules/vivus/dist/vivus.min.js',
             'node_modules/owl.carousel/dist/owl.carousel.min.js',
-            //'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+            'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
             //'node_modules/fancybox/dist/js/jquery.fancybox.js',
             //'node_modules/waypoints/lib/jquery.waypoints.min.js',
 
@@ -88,8 +89,8 @@ module.exports = function (grunt) {
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
+            'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
             //'node_modules/fancybox/dist/css/jquery.fancybox.css',
-            //'node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
             //'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
             '.tmp/font-file.css', '.tmp/app.css'
         ]

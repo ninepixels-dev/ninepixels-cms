@@ -11,8 +11,9 @@ tmp
 .tmp/
 dist/
 nbproject/
-/app/np-assets/
-/app/np-templates/
-/app/np-controller/
-np-api
-np-controller
+np-api/
+app/np-assets/
+app/np-templates/
+app/np-controller/
+app/np-assets/
+app/np-templates/
